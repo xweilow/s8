@@ -130,6 +130,8 @@
 <script>
     $(document).ready(function(){
         $('li a[href="<?php echo base_url(uri_string()); ?>"]').closest('li').addClass('active');
+        $('li a[href="<?php echo base_url(uri_string()); ?>"]').parents('.menu-item').addClass('opened');
+        $('li a[href="<?php echo base_url(uri_string()); ?>"]').parents('.sub-menu').show();
     });
 </script>
 </body>
