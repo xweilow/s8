@@ -125,7 +125,8 @@
 <?php if (isset($js_to_load) && $js_to_load != '') { ?>
 <script type="text/javascript" src="<?= base_url() ?>assets/js/<?= $js_to_load;?>"></script>
 <?php } ?>
-<?php if (isset($additional_js) && $additional_js != '') { echo $additional_js; } ?>
+<script src="<?php echo base_url() ?>assets/vendor/DataTables/datatables.min.js"></script>
+<script src="<?php echo base_url() ?>assets/js/datatable-data.js"></script>
 
 <script>
     $(document).ready(function(){

@@ -6,7 +6,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
-        <title>S8 - Dashboard</title>
+        <title>S8 - <?php echo $title ?></title>
         <link rel="icon" type="image/x-icon" href="<?= base_url() ?>img/favicon.ico"/>
         <link rel="icon" href="<?= base_url() ?>img/favicon.ico" type="image/png" sizes="16x16">
         <link rel="stylesheet" href="<?= base_url() ?>assets/vendor/pace/pace.css">
@@ -26,7 +26,16 @@
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/css/atmos.min.css">
         <!-- Additional library for page -->
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/dashboard.css">
-        <?php if (isset($additional_css) && $additional_css != '') { echo $additional_css; } ?>
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/vendor/DataTables/datatables.min.css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+        <script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
+        <script src="<?php echo base_url(); ?>js/LLC.js"></script>
+        
+        <script src="<?= base_url() ?>assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+        <script type="text/javascript" src="<?= base_url() ?>assets/js/bootstrap-notify-data.js"></script>
+        <script>
+            var baseURL = '<?php echo base_url() ?>';
+        </script>
     </head>
     <body class="pace-done sidebar-pinned">
         <aside class="admin-sidebar">
@@ -54,11 +63,11 @@
                         <a class="nav-link dropdown-toggle" href="#"   role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <div class="avatar avatar-sm avatar-online">
-                                <span class="avatar-title rounded-circle bg-dark">V</span>
+                                <span class="avatar-title rounded-circle bg-dark"><?php echo strtoupper(AN()[0]) ?></span>
                             </div>
                         </a>
                         <div class="dropdown-menu  dropdown-menu-right">
-                            <a class="dropdown-item" href="#"> Logout</a>
+                            <a class="dropdown-item" href="<?php echo base_url() ?>auth/logout"> Logout</a>
                         </div>
                     </li>
                 </ul>

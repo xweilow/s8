@@ -19,6 +19,6 @@ class Welcome extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index() {
-		redirect(base_url().'element','refresh');
+		redirect(base_url().'panel','refresh');
 	}
 }

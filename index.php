@@ -1,4 +1,6 @@
 <?php
+header('X-Frame-Options: SAMEORIGIN');
+date_default_timezone_set('Asia/Kuala_Lumpur');
 /**
  * CodeIgniter
  *
