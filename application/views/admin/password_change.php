@@ -1,3 +1,6 @@
+<link rel='stylesheet' href='<?php echo base_url() ?>assets/vendor/autocomplete/autocomplete.css'/>
+<script src="<?php echo base_url() ?>assets/vendor/autocomplete/autocomplete.js"></script>
+
 <section class="admin-content">
     <div class="bg-dark m-b-30">
         <div class="container">
@@ -30,14 +33,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="account_name">Username <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="account_name" required list="members">
-                                        <datalist id='members'>
-                                            <?php foreach ($members as $key => $n) { ?>
-                                            <option>
-                                                <?php echo $n['account_name'] ?>
-                                            </option>
-                                            <?php } ?>
-                                        </datalist>
+                                        <input type="text" class="form-control" id="account_name" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -132,6 +128,13 @@
     </div>
 </section>
 <script>
+    var names = [<?php $comma = false; foreach ($members as $key => $n) { if($comma) echo ','; echo "'".$n['account_name']."'"; $comma = true; } ?>];
+
+    $('#account_name').autocomplete({
+        source:[names],
+        minLength: 3
+    });
+
     var members = <?php echo json_encode($members) ?>;
     $('#account_name').on('input', function() {
         $('#password').val('');
