@@ -1,4 +1,3 @@
-<link rel='stylesheet' href='<?php echo base_url() ?>assets/vendor/summernote/summernote-bs4.css'/>
 <section class="admin-content">
     <div class="bg-dark m-b-30">
         <div class="container">
@@ -46,14 +45,14 @@
                                         <td style="text-align: center;">
                                             <div class="row m-b-10">
                                                 <div class="col-12">
-                                                    <button class="btn btn-sm btn-primary btn-edit" data-toggle="modal" data-id="<?php echo $record['id'] ?>" style='width: 80px;'>Edit</button>
-                                                    <button class="btn btn-sm btn-danger btn-delete" data-id="<?php echo $record['id'] ?>" style='width: 80px;'>Delete</button>
+                                                    <button type="button" class="btn btn-sm btn-primary btn-edit" data-toggle="modal" data-id="<?php echo $record['id'] ?>" style='width: 80px;'>Edit</button>
+                                                    <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="<?php echo $record['id'] ?>" style='width: 80px;'>Delete</button>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                     <?php $id++; } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -84,7 +83,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="new_content">Content<span class="text-danger">*</span></label>
-                                <textarea class="form-control content" id="summernote2" rows='10' name='content'></textarea>
+                                <textarea class="form-control content summernote" id="content" rows='10' name='content'></textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -94,7 +93,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary btn-create-news">Create</button>
             </div>
         </div>
     </div>
@@ -114,7 +113,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="title">Title <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="title" required>
+                                <input type="text" class="form-control" id="edit_title" required>
                                 <input type="hidden" id="news_id">
                             </div>
                         </div>
@@ -122,7 +121,7 @@
                             <div class="form-group col-md-12">
                                 <label for="content">Content <span class="text-danger">*</span></label>
                                 <!--<div id="summernote"></div>-->
-                                <textarea class="form-control" id='summernote' rows='10' name='content'></textarea>
+                                <textarea class="form-control summernote" id="edit_content" rows='10' name='content'></textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -146,8 +145,8 @@
             LLC.processResp(resp, function() {
                 $("#news_id").val(resp.data.id);
                 $("#label").html("<i>Posted At: "+resp.data.created_at+"</i>");
-                $("#title").val(resp.data.title);
-                $('#summernote').val(resp.data.content);
+                $("#edit_title").val(resp.data.title);
+                $('#edit_content').summernote('code', resp.data.content);
                 $('#editModal').modal('show'); 
             });
         }, this);
@@ -166,10 +165,14 @@
         return false;
     });
     $('.btn-edit-news').click(function() {
+        if($('#edit_title').val() == '' || $('#edit_content').val() == '') {
+            LLC.displayError('Please enter all fields.');
+            return false;
+        }
         var formData = new FormData();
         formData.append("id", $("#news_id").val());
-        formData.append("title", $("#title").val());
-        formData.append("content", $("#summernote").val());
+        formData.append("title", $("#edit_title").val());
+        formData.append("content", $("#edit_content").val());
         
         LLC.callServer('production/editNews', formData, function(resp) {
             LLC.processResp(resp, function() {
@@ -179,7 +182,21 @@
         }, this);
         return false;
     });
+    $('.btn-create-news').click(function() {
+        if($('#title').val() == '' || $('#content').val() == '') {
+            LLC.displayError('Please enter all fields.');
+            return false;
+        }
+        var formData = new FormData();
+        formData.append("title", $("#title").val());
+        formData.append("content", $("#content").val());
+        
+        LLC.callServer('production/addNews', formData, function(resp) {
+            LLC.processResp(resp, function() {
+                LLC.displaySuccess(resp.data);
+                setTimeout(function() { location.reload() }, 3000);
+            });
+        }, this);
+        return false;
+    });
 </script>
-<!--<script src='<?php echo base_url() ?>js/bundle.js'></script>
-<script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-66116118-3'); </script>
-<script src='<?php echo base_url() ?>js/bundle2.js'></script>-->

@@ -30,7 +30,7 @@
                                         <th>Username</th>
                                         <th style="min-width: 250px;">Order Details</th>
                                         <th style="min-width: 200px;">Delivery Option</th>
-                                        <th style="min-width: 200px; text-align: center;">Action</th>
+                                        <th style="text-align: center;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,7 +105,7 @@
                                         </td>
                                     </tr>
                                     <?php } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>

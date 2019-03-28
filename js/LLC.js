@@ -53,12 +53,13 @@ var LLC = {
             showProgressbar: true,
             timer: 500,
             // settings
+            z_index: 9999,
             type: 'danger',
-            template: '<div data-notify="container" class=" bootstrap-notify alert " role="alert" style="min-width: 450px;">' +
+            template: '<div data-notify="container" class=" bootstrap-notify alert " role="alert">' +
             '<div class="progress" data-notify="progressbar">' +
             '<div class="progress-bar bg-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
             '</div>' +
-            '<div class="media "> <div class="avatar m-r-10 avatar-sm"> <div class="avatar-title bg-{0} rounded-circle"><span data-notify="icon"></span></div> </div>' +
+            '<div class="media "> <div class="avatar m-r-10 avatar-sm"> <div class="avatar-title bg-{0} rounded-circle"><span data-notify="icon" class="mdi mdi-alert"></span></div> </div>' +
             '<div class="media-body"><div class="font-secondary" data-notify="title">{1}</div> ' +
             '<span class="opacity-75" data-notify="message">{2}</span></div>' +
             '<a href="{3}" target="{4}" data-notify="url"></a>' +
@@ -78,13 +79,14 @@ var LLC = {
             showProgressbar: true,
             timer: 500,
             // settings
-            type: 'warning',
-            template: '<div data-notify="container" class=" bootstrap-notify alert bg-dark text-white" role="alert" style="min-width: 450px;">' +
+            z_index: 9999,
+            type: 'success',
+            template: '<div data-notify="container" class=" bootstrap-notify alert " role="alert">' +
             '<div class="progress" data-notify="progressbar">' +
             '<div class="progress-bar bg-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
             '</div>' +
-            '<div class="media "> <div class="avatar m-r-10 avatar-sm"> <img src="assets/img/users/user-3.jpg" class="avatar-img bg-{0} rounded-circle"> </div> ' +
-            '<div class="media-body"><div class="font-secondary" data-notify="title"> {1}</div> ' +
+            '<div class="media "> <div class="avatar m-r-10 avatar-sm"> <div class="avatar-title bg-{0} rounded-circle"><span data-notify="icon" class="mdi mdi-alert"></span></div> </div>' +
+            '<div class="media-body"><div class="font-secondary" data-notify="title">{1}</div> ' +
             '<span class="opacity-75" data-notify="message">{2}</span></div>' +
             '<a href="{3}" target="{4}" data-notify="url"></a>' +
             ' <button type="button" aria-hidden="true" class="close" data-notify="dismiss"><span>x</span></button></div></div>'

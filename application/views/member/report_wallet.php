@@ -44,7 +44,7 @@
                                         <td><?php echo number_format($total, 2) ?></td>
                                     </tr>
                                     <?php $id++; $total -= $transaction['amount']; } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>

@@ -354,7 +354,7 @@ class Production extends MY_Controller {
     public function addNews() {
         $this->checkPrivilege(3);
         
-        $this->general_model->update('news', $news['id'], array(
+        $this->general_model->create('news', array(
             'created_at' => now(),
             'type' => 'default',
             'language' => 'english',
@@ -362,5 +362,30 @@ class Production extends MY_Controller {
             'content' => $this->input->post('content')
         ));
         $this->success("News Created");
+    }
+
+    public function onImageUpload() {
+        if ($_FILES['file']['name']) {
+            if (!is_dir("./uploads")){
+                mkdir("./uploads");
+            }
+            if (!is_dir("./uploads/news")){
+                mkdir("./uploads/news");
+            }
+            if (!$_FILES['file']['error']) {
+                $name = md5(rand(100, 1000));
+                $ext = explode('.', $_FILES['file']['name']);
+                $filename = $name . '.' . $ext[1];
+                $destination = './uploads/news/' . $filename; //change this directory
+                $location = $_FILES["file"]["tmp_name"];
+                move_uploaded_file($location, $destination);
+                // echo base_url().'uploads/document/' . $filename;//change this URL
+                $this->success(base_url().'uploads/news/' . $filename);
+            }
+            else
+            {
+              $this->fail('Your upload triggered the following error:  '.$_FILES['file']['error']);
+            }
+        }
     }
 }

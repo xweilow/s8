@@ -59,7 +59,7 @@ class Panel extends MY_Controller {
     public function genealogy() {
         $this->data['title'] = 'Genealogy';
         $this->data['downlines'] = $this->production_model->getAllDownlines(AN());
-        $this->loadPage('genealogy', $this->data);
+        $this->loadPage('genealogy2', $this->data);
     }
     
     public function orders() {

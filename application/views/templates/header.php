@@ -28,6 +28,8 @@
         <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/dashboard.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/vendor/DataTables/datatables.min.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+        <link rel='stylesheet' href='<?php echo base_url() ?>assets/vendor/summernote/summernote-bs4.css'/>
+        
         <script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
         <script src="<?php echo base_url(); ?>js/LLC.js"></script>
         

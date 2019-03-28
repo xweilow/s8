@@ -108,7 +108,6 @@
         </div>
     </div>
 </div>
-<script src="<?= base_url() ?>assets/vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url() ?>assets/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script src="<?= base_url() ?>assets/vendor/popper/popper.js"></script>
 <script src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -127,12 +126,24 @@
 <?php } ?>
 <script src="<?php echo base_url() ?>assets/vendor/DataTables/datatables.min.js"></script>
 <script src="<?php echo base_url() ?>assets/js/datatable-data.js"></script>
+<script src="<?php echo base_url() ?>assets/vendor/summernote/summernote_v0.8.11.js"></script>
+<script src="<?php echo base_url() ?>assets/js/summernote-data.js"></script>
 
 <script>
     $(document).ready(function(){
         $('li a[href="<?php echo base_url(uri_string()); ?>"]').closest('li').addClass('active');
         $('li a[href="<?php echo base_url(uri_string()); ?>"]').parents('.menu-item').addClass('opened');
         $('li a[href="<?php echo base_url(uri_string()); ?>"]').parents('.sub-menu').show();
+
+        $("input[type=file]").bind("change", function() {
+            var selected_file_name = $(this).val();
+            if ( selected_file_name.length > 0 ) {
+                $(this).parent().find('.custom-file-label').text(selected_file_name.replace(/C:\\fakepath\\/i, ''));
+            }
+            else {
+                $(this).parent().find('.custom-file-label').text('Choose file');
+            }
+        });
     });
 </script>
 </body>

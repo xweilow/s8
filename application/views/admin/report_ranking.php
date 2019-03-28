@@ -42,7 +42,7 @@
                                         <td><?php echo getRank($member['to_rank']) ?></td>
                                     </tr>
                                     <?php $id++; } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>

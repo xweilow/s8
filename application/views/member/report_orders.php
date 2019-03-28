@@ -72,7 +72,7 @@
                                         <td><?php echo $record['remark'] ?></td>
                                     </tr>
                                     <?php $id++; } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>

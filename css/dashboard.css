@@ -9,3 +9,9 @@
 .admin-sidebar .admin-sidebar-brand {
 	height: 100px;
 }
+.modal .modal-content {
+	border: 1px solid rgba(0,0,0,.2);;
+}
+.bootstrap-notify {
+	padding: 10px 30px 10px 10px;
+}

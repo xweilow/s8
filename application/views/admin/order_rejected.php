@@ -92,7 +92,7 @@
                                         </td>
                                     </tr>
                                     <?php } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>

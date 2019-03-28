@@ -44,7 +44,7 @@
                                         <td><?php echo getRank($downline['rank']) ?></td>
                                     </tr>
                                     <?php $id++; } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>

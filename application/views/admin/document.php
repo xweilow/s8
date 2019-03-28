@@ -146,7 +146,7 @@
                                         </td>
                                     </tr>
                                     <?php $id++; } ?>
-                                </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>
