@@ -41,10 +41,7 @@
                     <div class="mx-auto col-md-8">
                         <div class="p-b-20 text-center">
                             <p>
-                                <img src="<?= base_url() ?>assets/img/logo.svg" width="80" alt="">
-                            </p>
-                            <p class="admin-brand-content">
-                                atmos
+                                <img src="<?= base_url() ?>img/logo.png" width="150" alt="">
                             </p>
                         </div>
                         <h3 class="text-center p-b-20 fw-400">Login</h3>
