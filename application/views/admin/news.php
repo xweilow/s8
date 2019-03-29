@@ -76,7 +76,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="title">Title<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control title" required>
+                                <input type="text" class="form-control" id="title" required>
                                 <input type="hidden" id="news_id">
                             </div>
                         </div>
@@ -172,7 +172,7 @@
         var formData = new FormData();
         formData.append("id", $("#news_id").val());
         formData.append("title", $("#edit_title").val());
-        formData.append("content", $("#edit_content").val());
+        formData.append("content", $("#edit_content").summernote('code'));
         
         LLC.callServer('production/editNews', formData, function(resp) {
             LLC.processResp(resp, function() {
@@ -189,7 +189,7 @@
         }
         var formData = new FormData();
         formData.append("title", $("#title").val());
-        formData.append("content", $("#content").val());
+        formData.append("content", $("#content").summernote('code'));
         
         LLC.callServer('production/addNews', formData, function(resp) {
             LLC.processResp(resp, function() {
