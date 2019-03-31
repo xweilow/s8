@@ -7,8 +7,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>S8 - Login</title>
-    <link rel="icon" type="image/x-icon" href="<?= base_url() ?>assets/img/logo.png"/>
-    <link rel="icon" href="<?= base_url() ?>assets/img/logo.png" type="image/png" sizes="16x16">
+    <link rel="icon" type="image/x-icon" href="<?= base_url() ?>img/favicon.ico"/>
     <link rel="stylesheet" href="<?= base_url() ?>assets/vendor/pace/pace.css">
     <script src="<?= base_url() ?>assets/vendor/pace/pace.min.js"></script>
     <!--vendors-->
