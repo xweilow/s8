@@ -30,7 +30,9 @@
                                         <th>Username</th>
                                         <th style="min-width: 250px;">Order Details</th>
                                         <th style="min-width: 200px;">Delivery Option</th>
+                                        <th style="min-width: 200px;">Tracking Number</th>
                                         <th style="min-width: 200px; text-align: center;">Approval Details</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,7 +76,7 @@
                                             </div>
                                         </td>
                                         <?php if($record['delivery_option'] == 1) { ?>
-                                        <td>Self Pick-Up</td>
+                                        <td  class="text-left">Self Pick-Up</td>
                                         <?php } else { ?>
                                         <td class="text-left">
                                             <?php echo $record['receiver'] ?><br />
@@ -86,9 +88,26 @@
                                             <?php echo $record['country'] ?>
                                         </td>
                                         <?php } ?>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary btn-update" style="<?php if($record['delivery_option'] != 2) { ?>display: none;<?php } ?>width: 80px;" data-id="<?php echo $record['id'] ?>">Update</button>
+                                            <input type="text" class="form-control track_num" placeholder="Tracking Number" style="<?php if($record['delivery_option'] != 2) { ?>display: none;<?php } ?>margin-top: 5px;" value="<?php echo $record['track_num'] ?>">
+                                            <input type="text" class="form-control courier_name" placeholder="Courier Name" style="<?php if($record['delivery_option'] != 2) { ?>display: none;<?php } ?>margin-top: 5px;" value="<?php echo $record['courier_name'] ?>">
+                                        </td>
                                         <td style="text-align: center;">
                                             <?php echo $record['approved_at'] ?><br />
                                             <?php echo $record['remark'] ?>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <div class="row m-b-10">
+                                                <div class="col-12">
+                                                    <div class="approved-tab">
+                                                        <button class="btn btn-sm btn-success btn-complete" style="width: 80px;" data-id="<?php echo $record['id'] ?>">Complete</button>
+                                                    </div>
+                                                    <div class="completed-tab" style='display: none;'>
+                                                        <span class="badge badge-soft-success">Completed</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <?php } ?>
@@ -101,3 +120,35 @@
         </div>
     </div>
 </section>
+<script>
+    $('.btn-complete').click(function() {
+        var btn = $(this);
+        
+        var formData = new FormData();
+        formData.append("id", $(this).data("id"));
+        
+        LLC.callServer('production/completeOrder', formData, function(resp) {
+            LLC.processResp(resp, function() {
+                LLC.displaySuccess(resp.data);
+                btn.parents("td").find(".approved-tab").hide();
+                btn.parents("td").find(".completed-tab").show();
+            });
+        }, this);
+        return false;
+    });
+    $('.btn-update').click(function() {
+        var btn = $(this);
+        
+        var formData = new FormData();
+        formData.append("id", $(this).data("id"));
+        formData.append("track_num", $(this).parents("td").find(".track_num").val());
+        formData.append("courier_name", $(this).parents("td").find(".courier_name").val());
+        
+        LLC.callServer('production/updateOrder', formData, function(resp) {
+            LLC.processResp(resp, function() {
+                LLC.displaySuccess(resp.data);
+            });
+        }, this);
+        return false;
+    })
+</script>

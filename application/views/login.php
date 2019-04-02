@@ -60,6 +60,21 @@
                             </div>
                         </div>
                         <?php } ?>
+                        <?php if(isset($_SESSION['successmsg'])) { ?>
+                        <div class="alert alert-border-success alert-dismissible fade show" role="alert">
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <i class="icon mdi mdi-alert-octagram"></i>
+                                </div>
+                                <div class="content" style="margin-top: 7px;">
+                                    <?php echo $_SESSION['successmsg']; unset($_SESSION['successmsg']); ?>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
                         <form class="form-validation" method="POST" action="<?php echo base_url() ?>auth/login">
                             <div class="form-row">
                                 <div class="form-group floating-label col-md-12">
@@ -74,7 +89,7 @@
                             <button type="submit" class="btn btn-primary btn-block llc_submit">Login</button>
                         </form>
                         <p class="text-right p-t-10">
-                            <a href="#!" class="text-underline">Forgot Password?</a>
+                            <a href="<?php echo base_url() ?>auth/forgetPassword" class="text-underline">Forgot Password?</a>
                         </p>
                     </div>
                 </div>

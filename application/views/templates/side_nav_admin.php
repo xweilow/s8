@@ -25,6 +25,16 @@
             <!--submenu-->
             <ul class="sub-menu">
                 <li class="menu-item">
+                    <a href="<?= base_url() ?>board/members/listing" class=" menu-link">
+                        <span class="menu-label">
+                            <span class="menu-name">Listing</span>
+                        </span>
+                        <span class="menu-icon">
+                            <i class="icon-placeholder"><i class="icon-placeholder"><i class="icon-placeholder mdi mdi-account"></i></i></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="menu-item">
                     <a href="<?= base_url() ?>board/members/document" class=" menu-link">
                         <span class="menu-label">
                             <span class="menu-name">Document Approval</span>
@@ -107,6 +117,16 @@
                         </span>
                         <span class="menu-icon">
                             <i class="icon-placeholder"><i class="icon-placeholder">A</i></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="<?= base_url() ?>board/orders/completed" class="menu-link">
+                        <span class="menu-label">
+                            <span class="menu-name">Completed</span>
+                        </span>
+                        <span class="menu-icon">
+                            <i class="icon-placeholder"><i class="icon-placeholder">C</i></i>
                         </span>
                     </a>
                 </li>
@@ -229,6 +249,26 @@
                         </span>
                         <span class="menu-icon">
                             <i class="icon-placeholder"><i class="icon-placeholder">R</i></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="<?= base_url() ?>board/reports/monthlyWr" class="menu-link">
+                        <span class="menu-label">
+                            <span class="menu-name">Monthly Report Wr</span>
+                        </span>
+                        <span class="menu-icon">
+                            <i class="icon-placeholder"><i class="icon-placeholder">M</i></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="<?= base_url() ?>board/reports/monthlySales" class="menu-link">
+                        <span class="menu-label">
+                            <span class="menu-name">Monthly Report Sales</span>
+                        </span>
+                        <span class="menu-icon">
+                            <i class="icon-placeholder"><i class="icon-placeholder">M</i></i>
                         </span>
                     </a>
                 </li>

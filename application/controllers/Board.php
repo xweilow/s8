@@ -63,6 +63,17 @@ class Board extends MY_Controller {
             $this->data['title'] = 'Docment Approval';
             $this->data['members'] = $this->production_model->getPendingDocument();
             $this->loadPage('document', $this->data);
+        } else if($page == 'listing') {
+            $this->data['title'] = 'Member Listing';
+            $this->data['members'] = $this->production_model->getMemberListing($_GET);
+            $this->loadPage('member', $this->data);
+        } else if($page == 'edit') {
+            $this->data['title'] = 'Member Edit';
+            $this->data['member'] = $this->production_model->getMember($id);
+            if(sizeof($this->data['member']) == 0) {
+                refreshFunc('board/members/listing');
+            }
+            $this->loadPage('member_edit', $this->data);
         }
     }
     
@@ -73,8 +84,11 @@ class Board extends MY_Controller {
             $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 0, 'is_rejected' => 0, 'is_deleted' => 0));
             $this->loadPage('order_pending', $this->data);
         } else if($page == 'approved') {
-            $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 1, 'is_rejected' => 0, 'is_deleted' => 0));
+            $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 1, 'is_rejected' => 0, 'is_completed' => 0, 'is_deleted' => 0));
             $this->loadPage('order_approved', $this->data);
+        } else if($page == 'completed') {
+            $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 1, 'is_rejected' => 0, 'is_completed' => 1, 'is_deleted' => 0));
+            $this->loadPage('order_completed', $this->data);
         } else if($page == 'rejected') {
             $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 0, 'is_rejected' => 1, 'is_deleted' => 0));
             $this->loadPage('order_rejected', $this->data);
@@ -100,6 +114,19 @@ class Board extends MY_Controller {
         $this->data['title'] = 'News Management';
         $this->data['records'] = $this->general_model->find('news', array('is_deleted' => 0));
         $this->loadPage('news', $this->data);
+    }
+    
+    public function loginMember($id) {
+        $this->checkPrivilege(3);
+        
+        $member = $this->general_model->get('member', intval($id));
+        if(sizeof($member) == 0) {
+            $this->fail("Member Not Found");
+        }
+        
+        $_SESSION['account_name'] = $member['account_name'];
+        $_SESSION['user_privilege'] = 1;
+        refreshFunc('panel');
     }
     
     public function reports($page = '', $param = '') {
@@ -180,14 +207,45 @@ class Board extends MY_Controller {
             $this->data['members'] = $this->production_model->getAllMembers();
             
             $this->loadPage('report_wallet', $this->data);
+        } else if($page == 'monthlyWr') {
+            $this->data['wr'] = $this->production_model->getMonthlyReportWr();
+            $this->loadPage('report_monthly_wr', $this->data);
+        } else if($page == 'monthlySales') {
+            $this->data['sales'] = $this->production_model->getMonthlyReportSales();
+            $this->loadPage('report_monthly_sales', $this->data);
         }
     }
     
     public function index() {
         $this->data['title'] = 'Board';
         
-        $this->data['totalSales'] = $this->general_model->sum('stock_order', array('is_approved' => 1, 'is_deleted' => 0), 'quantity');
+        $this->data['totalSales'] = $this->general_model->sum('stock_order', array('is_approved' => 1, 'is_deleted' => 0), 'total_price');
         $this->data['dailySales'] = $this->production_model->getSales();
+        
+        $this->data['members'] = $this->general_model->count('member', array('is_deleted' => 0));
+        $this->data['totalBox'] = $this->general_model->sum('stock_order', array('is_approved' => 1, 'is_deleted' => 0), 'quantity');
+        $this->data['totalComm'] = $this->general_model->sum('wallet_transaction', array('description' => 'payout_commission', 'is_approved' => 1, 'is_deleted' => 0), 'amount');
+        $this->data['totalWr'] = $this->general_model->sum('withdrawal_request', array('is_approved' => 1, 'is_deleted' => 0), 'amount');
+        $this->data['totalWallet'] = $this->general_model->sum('member', array('is_deleted' => 0), 'cash_wallet');
+        
+        $this->data['rank0'] = $this->general_model->count('member', array('rank' => 0, 'is_deleted' => 0));
+        $this->data['rank1'] = $this->general_model->count('member', array('rank' => 1, 'is_deleted' => 0));
+        $this->data['rank2'] = $this->general_model->count('member', array('rank' => 2, 'is_deleted' => 0));
+        $this->data['rank3'] = $this->general_model->count('member', array('rank' => 3, 'is_deleted' => 0));
+        $this->data['rank4'] = $this->general_model->count('member', array('rank' => 4, 'is_deleted' => 0));
+        $this->data['rank5'] = $this->general_model->count('member', array('rank' => 5, 'is_deleted' => 0));
+        
+        $this->data['topSales'] = $this->production_model->getTopSales();
+        $this->data['weekSales'] = $this->production_model->getSalesByDate();
+        
+        $this->data['membersMonth'] = $this->production_model->getMemberCount('1 MONTH');
+        $this->data['membersWeek'] = $this->production_model->getMemberCount('1 WEEK');
+        $this->data['salesMonth'] = $this->production_model->getTotalSales('1 MONTH');
+        $this->data['salesWeek'] = $this->production_model->getTotalSales('1 WEEK');
+        $this->data['commMonth'] = $this->production_model->getTotalCommission('1 MONTH');
+        $this->data['commWeek'] = $this->production_model->getTotalCommission('1 WEEK');
+        $this->data['wrMonth'] = $this->production_model->getTotalWr('1 MONTH');
+        $this->data['wrWeek'] = $this->production_model->getTotalWr('1 WEEK');
         
     	$this->loadPage('board', $this->data);
     }

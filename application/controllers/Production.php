@@ -12,14 +12,6 @@ class Production extends MY_Controller {
         $this->checkPrivilege(1);
         
         $member = $this->production_model->getMember(AN());
-        if($member['ic_status'] != 1) {
-            $this->fail("New Order Is Only Available After Identity Verification");
-        }
-        
-        $pendingOrder = $this->general_model->count('stock_order', array('account_name' => AN(), 'is_approved' => 0, 'is_rejected' => 0, 'is_deleted' => 0));
-        if($pendingOrder > 0) {
-            $this->fail("You Have Stock Order Pending For Approval");
-        }
         
         $current_rank = $this->general_model->get('rank', $member['rank']);
         $price = $current_rank['price'];
@@ -116,6 +108,10 @@ class Production extends MY_Controller {
         if($pass != 'guyabihau981425') {
             return false;
         }
+        if(date('t') != date('d')) {
+            echo "Today Not Last Day Of Month La!";
+            return false;
+        }
         
         ini_set('max_execution_time', 30000);
         
@@ -160,6 +156,8 @@ class Production extends MY_Controller {
             'total_amount' => $total_amount,
             'updated_at' => now()
         ));
+        
+        echo "Done";
     }
     
     public function updateWithdrawalStatus() {
@@ -179,10 +177,16 @@ class Production extends MY_Controller {
         }
         
         if($action == 'approve') {
+            $uploadedFile = '';
+            if(!empty($_FILES["bank_stat"]["type"])){
+                $uploadedFile = $this->uploadFile("bank_stat", "bank_stat");
+            }
+
             $this->general_model->update('withdrawal_request', $request['id'], array(
                 'is_approved' => 1,
                 'approved_by' => AN(),
                 'approved_at' => now(),
+                'bank_stat' => $uploadedFile,
                 'remark' => $this->input->post('remark')
             ));
         } else if($action == 'reject') {
@@ -231,6 +235,51 @@ class Production extends MY_Controller {
         $this->success("Order Has Been Processed");
     }
     
+    public function completeOrder() {
+        $this->checkPrivilege(3);
+        
+        $order = $this->general_model->get('stock_order', $this->input->post('id'));
+        if(sizeof($order) == 0) {
+            $this->fail("Invalid Request");
+        }
+        if($order['is_approved'] != 1) {
+            $this->fail("Invalid Request");
+        }
+        if($order['is_completed'] == 1) {
+            $this->fail("Order Has Been Processed Before");
+        }
+        
+        $this->general_model->update('stock_order', $order['id'], array(
+            'is_completed' => 1,
+            'completed_by' => AN(),
+            'completed_at' => now()
+        ));
+        
+        $this->success("Order Has Been Processed");
+    }
+    
+    public function updateOrder() {
+        $this->checkPrivilege(3);
+        
+        $order = $this->general_model->get('stock_order', $this->input->post('id'));
+        if(sizeof($order) == 0) {
+            $this->fail("Invalid Request");
+        }
+        if($order['is_approved'] != 1) {
+            $this->fail("Invalid Request");
+        }
+        if($order['is_completed'] == 1) {
+            $this->fail("Order Has Been Processed Before");
+        }
+        
+        $this->general_model->update('stock_order', $order['id'], array(
+            'track_num' => $this->input->post('track_num'),
+            'courier_name' => $this->input->post('courier_name')
+        ));
+        
+        $this->success("Info Updated");
+    }
+    
     public function approveOrder() {
         $this->checkPrivilege(3);
         
@@ -267,7 +316,9 @@ class Production extends MY_Controller {
         // **************************
         // Check Sponsor Ranking
         // **************************
-        $this->production_model->checkRanking($sponsor['account_name']);
+        if($sponsor['account_name'] != '') {
+            $this->production_model->checkRanking($sponsor['account_name']);
+        }
         
         // **************************
         // Pay Commission
@@ -285,11 +336,12 @@ class Production extends MY_Controller {
         // Deduct Delivery Fee
         // **************************
         if($order['delivery_option'] == 2) {
+            $deliverPayoutUpline = $deliverPayoutUpline == '' ? $member['account_name'] : $deliverPayoutUpline;
             $data = array(
                 'account_name' => $deliverPayoutUpline,
                 'account_name_2' => $member['account_name'],
                 'wallet_type' => 'cash_wallet',
-                'amount' => ($order['quantity']/10)*10,
+                'amount' => ($order['quantity']/10)*10*(-1),
                 'description' => 'fee',
                 'description2' => "Delivery Fee",
                 'tx_type' => 'fee',

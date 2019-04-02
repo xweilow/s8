@@ -58,8 +58,8 @@ class MY_controller extends CI_Controller {
         $temporary = explode(".", $_FILES[$uploadFile]["name"]);
         $file_extension = end($temporary);
         if((($_FILES[$uploadFile]["type"] == "image/png") || ($_FILES[$uploadFile]["type"] == "image/jpg") || ($_FILES[$uploadFile]["type"] == "image/jpeg")) && in_array($file_extension, $valid_extensions)){
-            if(filesize($_FILES[$uploadFile]['tmp_name']) > 20000) {
-                $this->fail("Maximum File Size is 8000KB");
+            if(filesize($_FILES[$uploadFile]['tmp_name']) > 20000000) {
+                $this->fail("Maximum File Size is 20000KB");
             }
 
             $sourcePath = $_FILES[$uploadFile]['tmp_name'];

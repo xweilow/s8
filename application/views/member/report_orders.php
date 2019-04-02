@@ -27,12 +27,10 @@
                                     <tr style="text-align: center;">
                                         <th>#</th>
                                         <th>Ordered At</th>
-                                        <th>Quantity</th>
-                                        <th class="text-right">Price</th>
-                                        <th class="text-right">Total</th>
-                                        <th>Receipt</th>
-                                        <th>Delivery Option</th>
+                                        <th style="min-width: 250px;">Order Details</th>
+                                        <th style="min-width: 200px;">Delivery Option</th>
                                         <th>Status</th>
+                                        <th style="min-width: 100px;">Tracking No.</th>
                                         <th>Remark</th>
                                     </tr>
                                 </thead>
@@ -41,10 +39,40 @@
                                     <tr style="text-align: center;">
                                         <td><?php echo $id ?></td>
                                         <td><?php echo $record['created_at'] ?></td>
-                                        <td><?php echo $record['quantity'] ?></td>
-                                        <td class="text-right"><?php echo number_format($record['price'], 2) ?></td>
-                                        <td class="text-right"><?php echo number_format($record['total_price'], 2) ?></td>
-                                        <td><a href="<?php echo base_url().$record['receipt_file_path'] ?>" target="_blank" class="btn btn-sm ml-2 mr-2 btn-light text-primary">View Receipt</a></td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-6 text-left">
+                                                    Quantity (Boxes)
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <?php echo $record['quantity'] ?>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 text-left">
+                                                    Price/Box (RM)
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <?php echo number_format($record['price'], 2) ?>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 text-left">
+                                                    Total Price (RM)
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <?php echo number_format($record['total_price'], 2) ?>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 text-left">
+                                                    Receipt
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <a href="<?php echo base_url().$record['receipt_file_path'] ?>" target="_blank" class="btn btn-sm ml-2 btn-light text-primary">View Receipt</a>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <?php if($record['delivery_option'] == 1) {
                                                 echo "Self Pick Up";
@@ -63,12 +91,15 @@
                                         <td>
                                             <?php if($record['is_approved'] == 0 && $record['is_rejected'] == 0) { ?>
                                                 <span class="badge badge-soft-info">Pending</span>
-                                            <?php } else if($record['is_approved'] == 1 && $record['is_rejected'] == 0) { ?>
-                                                <span class="badge badge-soft-success">Approved</span>
+                                            <?php } else if($record['is_approved'] == 1 && $record['is_rejected'] == 0 && $record['is_completed'] == 0) { ?>
+                                                <span class="badge badge-soft-primary">Approved</span>
+                                            <?php } else if($record['is_approved'] == 1 && $record['is_rejected'] == 0 && $record['is_completed'] == 1) { ?>
+                                                <span class="badge badge-soft-success">Completed</span>
                                             <?php } else if($record['is_approved'] == 0 && $record['is_rejected'] == 1) { ?>
                                                 <span class="badge badge-soft-danger">Rejected</span>
                                             <?php } ?>
                                         </td>
+                                        <td><?php if($record['courier_name'] != '') { echo $record['courier_name'].'<br />'; } ?><?php echo $record['track_num'] ?></td>
                                         <td><?php echo $record['remark'] ?></td>
                                     </tr>
                                     <?php $id++; } ?>

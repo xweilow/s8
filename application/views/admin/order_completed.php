@@ -5,11 +5,11 @@
                 <div class="col-md-6 text-white p-b-30">
                     <div class="media">
                         <div class="avatar avatar mr-3">
-                            <div class="avatar-title rounded-circle bg-soft-success">A</div>
+                            <div class="avatar-title rounded-circle bg-soft-success">C</div>
                         </div>
                         <div class="media-body">
-                            <h1>Approved Withdrawal</h1>
-                            <p class="opacity-75">Withdrawal Transactions That Have Been Paid By The Company.</p>
+                            <h1>Completed Orders</h1>
+                            <p class="opacity-75">Orders That Have Been Delivered And Completed.</p>
                         </div>
                     </div>
                 </div>
@@ -28,69 +28,73 @@
                                         <th>#</th>
                                         <th style="min-width: 100px;">Created At</th>
                                         <th>Username</th>
-                                        <th>Amount</th>
-                                        <th style="min-width: 300px;">Bank Details</th>
-                                        <th style="min-width: 200px;">Approval Details</th>
+                                        <th style="min-width: 250px;">Order Details</th>
+                                        <th style="min-width: 200px;">Delivery Option</th>
+                                        <th style="min-width: 100px;">Tracking Number</th>
+                                        <th style="min-width: 200px; text-align: center;">Approval Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $id = 1; foreach($records as $record) { ?>
+                                    <?php foreach($records as $record) { ?>
                                     <tr style="text-align: center;">
-                                        <td><?php echo $id ?></td>
+                                        <td><?php echo $record['id'] ?></td>
                                         <td><?php echo $record['created_at'] ?></td>
                                         <td><?php echo $record['account_name'] ?></td>
-                                        <td><?php echo $record['amount'] ?></td>
                                         <td>
                                             <div class="row">
                                                 <div class="col-6 text-left">
-                                                    Bank Name
+                                                    Quantity (Boxes)
                                                 </div>
                                                 <div class="col-6 text-right">
-                                                    <?php echo $record['b_name'] ?>
+                                                    <?php echo $record['quantity'] ?>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6 text-left">
-                                                    Account Holder
+                                                    Price/Box (RM)
                                                 </div>
                                                 <div class="col-6 text-right">
-                                                    <?php echo $record['b_acc_name'] ?>
+                                                    <?php echo number_format($record['price'], 2) ?>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6 text-left">
-                                                    Account Number
+                                                    Total Price (RM)
                                                 </div>
                                                 <div class="col-6 text-right">
-                                                    <?php echo $record['b_acc_num'] ?>
+                                                    <?php echo number_format($record['total_price'], 2) ?>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6 text-left">
-                                                    Branch Address
+                                                    Receipt
                                                 </div>
                                                 <div class="col-6 text-right">
-                                                    <?php echo $record['b_branch_add'] ?>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6 text-left">
-                                                    Swift Code
-                                                </div>
-                                                <div class="col-6 text-right">
-                                                    <?php echo $record['b_swift'] ?>
+                                                    <a href="<?php echo base_url().$record['receipt_file_path'] ?>" target="_blank" class="btn btn-sm ml-2 btn-light text-primary">View Receipt</a>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <?php if($record['bank_stat'] != '') { ?>
-                                            <a href="<?php echo base_url().$record['bank_stat'] ?>" target="_blank" class="btn btn-sm ml-2 mr-2 btn-light text-primary">Bank Statement</a><br />
-                                            <?php } ?>
-                                            <?php echo $record['approved_at'] ?><br />
+                                        <?php if($record['delivery_option'] == 1) { ?>
+                                        <td>Self Pick-Up</td>
+                                        <?php } else { ?>
+                                        <td class="text-left">
+                                            <?php echo $record['receiver'] ?><br />
+                                            <?php echo $record['mobile'] ?><br />
+                                            <?php echo $record['addressline1'] ?><br />
+                                            <?php echo $record['addressline2'] == '' ? '' : $record['addressline2'].'<br />' ?>
+                                            <?php echo $record['postcode'].' '.$record['city'] ?><br />
+                                            <?php echo $record['state'] ?><br />
+                                            <?php echo $record['country'] ?>
+                                        </td>
+                                        <?php } ?>
+                                        <td><?php if($record['courier_name'] != '') { echo $record['courier_name'].'<br />'; } ?><?php echo $record['track_num'] ?></td>
+                                        <td style="text-align: left;">
+                                            Approved At: <?php echo $record['approved_at'] ?><br />
+                                            Completed At: <?php echo $record['completed_at'] ?><br />
                                             <?php echo $record['remark'] ?>
                                         </td>
                                     </tr>
-                                    <?php $id++; } ?>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

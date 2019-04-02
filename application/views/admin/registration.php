@@ -86,7 +86,11 @@
     </div>
 </section>
 <script>
-    $('#account_name').on('input', function() {
+    $('#account_name').on('focus', function() {
+        $(this).removeClass('is-valid');
+        $(this).removeClass('is-invalid');
+    });
+    $('#account_name').on('blur', function() {
         $(this).removeClass('is-valid');
         $(this).removeClass('is-invalid');
         
@@ -96,10 +100,8 @@
         LLC.callServer('user/checkAccountName', formData, function(resp) {
             LLC.processResp(resp, function() {
                 $('#account_name').addClass('is-valid');
-                $('#account_name').focus();
             }, function() {
                 $('#account_name').addClass('is-invalid');
-                $('#account_name').focus();
             });
         }, this);
     })

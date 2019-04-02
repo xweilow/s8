@@ -88,6 +88,10 @@
                                                     <div class="pending-tab">
                                                         <button class="btn btn-sm btn-success btn-action" style="width: 80px;" data-id="<?php echo $record['id'] ?>" data-action="approve">Approve</button>
                                                         <button class="btn btn-sm btn-danger btn-action" style="width: 80px;" data-id="<?php echo $record['id'] ?>" data-action="reject">Reject</button>
+                                                        <div class="custom-file" style="margin-top: 5px; text-align: left;">
+                                                            <input type="file" class="custom-file-input bank_stat">
+                                                            <label class="custom-file-label" for="bank_stat">Choose File</label>
+                                                        </div>
                                                         <input type="text" class="form-control remark" placeholder="Remark" style="margin-top: 5px;">
                                                     </div>
                                                     <div class="approved-tab" style='display: none;'>
@@ -115,10 +119,16 @@
         var btn = $(this);
         var action = $(this).data("action");
         
+        if($(this).parents("td").find(".bank_stat")[0].files.length > 0 && !LLC.checkFileExtension($(this).parents("td").find(".bank_stat").val())) {
+            LLC.displayError("Invalid File Format");
+            return false;
+        }
+        
         var formData = new FormData();
         formData.append("action", $(this).data("action"));
         formData.append("id", $(this).data("id"));
         formData.append("remark", $(this).parents("td").find(".remark").val());
+        formData.append("bank_stat", $(this).parents("td").find(".bank_stat")[0].files[0]);
         
         LLC.callServer('production/updateWithdrawalStatus', formData, function(resp) {
             LLC.processResp(resp, function() {

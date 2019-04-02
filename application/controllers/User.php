@@ -8,6 +8,81 @@ class User extends MY_Controller {
         $this->load->model('production_model');
     }
     
+    public function adminUpdatePersonalInfo() {
+        $this->checkPrivilege(3);
+        
+        $member = $this->production_model->getMember($this->input->post('account_name'));
+        if(sizeof($member) == 0) {
+            $this->fail("Member Not Found");
+        }
+        
+        $uploadedFile = $member['ic_file_path'];
+        if(!empty($_FILES["ic_file_path"]["type"])){
+            $uploadedFile = $this->uploadFile("ic_file_path", "documents");
+        }
+        
+        $this->general_model->update('member', $member['id'], array(
+            'fname' => $this->input->post('fname'),
+            'email' => $this->input->post('email'),
+            'mobile' => $this->input->post('mobile'),
+            'ic' => $this->input->post('ic'),
+            'ic_file_path' => $uploadedFile,
+            'ic_uploaded_at' => now(),
+            'ic_status' => $member['ic_status'] == 1 ? 1 : 0,
+            'ic_remark' => $member['ic_status'] == 1 ? $member['ic_remark'] : ''
+        ));
+        
+        $this->success("Personal Information Updated Successfully");
+    }
+    
+    public function adminUpdateBankInfo() {
+        $this->checkPrivilege(3);
+        
+        $member = $this->production_model->getMember($this->input->post('account_name'));
+        if(sizeof($member) == 0) {
+            $this->fail("Member Not Found");
+        }
+        
+        $uploadedFile = $member['bank_file_path'];
+        if(!empty($_FILES["bank_file_path"]["type"])){
+            $uploadedFile = $this->uploadFile("bank_file_path", "banks");
+        }
+        
+        $this->general_model->update('member', $member['id'], array(
+            'bank_account_name' => $this->input->post('bank_account_name'),
+            'bank_account_number' => $this->input->post('bank_account_number'),
+            'bank_name' => $this->input->post('bank_name'),
+            'branch_address' => $this->input->post('branch_address'),
+            'bank_swift_code' => $this->input->post('bank_swift_code'),
+            'bank_file_path' => $uploadedFile,
+            'bank_uploaded_at' => now(),
+            'bank_status' => $member['bank_status'] == 1 ? 1 : 0,
+            'bank_remark' => $member['bank_status'] == 1 ? $member['bank_remark'] : ''
+        ));
+        
+        $this->success("Bank Information Updated Successfully");
+    }
+    
+    public function adminUpdateAddressInfo() {
+        $this->checkPrivilege(3);
+        
+        $member = $this->production_model->getMember($this->input->post('account_name'));
+        if(sizeof($member) == 0) {
+            $this->fail("Member Not Found");
+        }
+        
+        $this->general_model->update('member', $member['id'], array(
+            'addressline1' => $this->input->post('addressline1'),
+            'addressline2' => $this->input->post('addressline2'),
+            'city' => $this->input->post('city'),
+            'postcode' => $this->input->post('postcode'),
+            'state' => $this->input->post('state'),
+            'country' => $this->input->post('country')
+        ));
+        
+        $this->success("Address Information Updated Successfully");
+    }
+    
     public function updatePersonalInfo() {
         $this->checkPrivilege(1);
         
@@ -16,7 +91,7 @@ class User extends MY_Controller {
             $this->fail("Modification Is Not Allowed After Identity Verification");
         }
         if($member['bank_account_name'] != '') {
-            if(trim(strtolower($this->input->post('fname'))) != strtolower($member['bank_account_name'])) {
+            if(trim(strtolower($this->input->post('fname'))) != trim(strtolower($member['bank_account_name']))) {
                 $this->fail("Bank Account Holder Must Match With Account Full Name");
             }
         }
@@ -84,7 +159,7 @@ class User extends MY_Controller {
             'city' => $this->input->post('city'),
             'postcode' => $this->input->post('postcode'),
             'state' => $this->input->post('state'),
-            'state' => $this->input->post('country')
+            'country' => $this->input->post('country')
         ));
         
         $this->success("Address Information Updated Successfully");
@@ -130,14 +205,71 @@ class User extends MY_Controller {
             }
         }
         
+        $rank = $this->general_model->get('rank', 0);
+        
+        $_POST['current_price'] = $rank['price'];
         $_POST['account_name'] = $account_name;
         $_POST['sponsor_id'] = $member['account_name'];
         $_POST['sponsor_lvl'] = $member['sponsor_lvl'] + 1;
-        $_POST['sponsor_upline_ids'] = $member['sponsor_upline_ids'] == '' ? $member['account_name'].',' : $member['account_name'].','.$sponsor_member['sponsor_upline_ids'];
+        $_POST['sponsor_upline_ids'] = $member['sponsor_upline_ids'] == '' ? $member['account_name'].',' : $member['account_name'].','.$member['sponsor_upline_ids'];
         
         $this->production_model->createMember($this->input->post());
         
+        $token = passwordGen(6);
+        $data = array(
+            'created_at' => now(),
+            'account_name' => $account_name,
+            'token' => simplehash($token)
+        );
+//        log_message('debug', $token);
+        $this->general_model->create('activation', $data);
+        
+        $data = array(
+            'account_name' => $account_name,
+            'email' => $this->input->post('email'),
+            'token' => $token
+        );
+        $this->sendWelcomeEmail($data);
+        
         $this->success("New Account Registration Success");
+    }
+    
+    private function sendWelcomeEmail($data) {
+        $this->load->library('email');
+
+        $fromEmail = 'admin@perfects8.com';
+        $website = base_url();
+        $link = base_url().'auth/activation/'.$data['token'];
+        
+        $this->email->set_mailtype("html");
+        $this->email->from($fromEmail, 'S-8');
+        $this->email->to($data['email']);
+        $this->email->subject('Welcome To S-8!');
+        
+        $html = "<br />Dear $data[account_name],<br>
+				<br>
+                Welcome to S-8. We are happy to have you as a member of our community. 
+                You have successfully registered an account in our system,
+                please click this <a href='$link'>activation link</a> to activate your account and start your order.
+                Privacy is important to us, therefore, we wil not sell, rent, or give your address to any third party.
+                <br /><br />
+                Thanks again for registering. If you have any questions or comments, feel free to contact us.
+                <br /><br /><br />
+                Sincerely, <br />
+                S-8 Community<br />
+                <br /><br /><br />
+                Email: $fromEmail<br />
+                Website: $website
+                ";
+            
+        $this->email->message($html);
+        
+        if ($this->email->send()) {
+	    	return true;
+	    } else {
+	    	log_message('debug', $this->email->print_debugger());
+			return false;
+	    }
     }
     
     public function checkAccountName() {
@@ -200,4 +332,38 @@ class User extends MY_Controller {
         $this->success("Document Status Updated");
     }
     
+    public function updateMemberStatus() {
+        $this->checkPrivilege(3);
+        
+        $member = $this->general_model->get('member', $this->input->post('id'));
+        if(sizeof($member) == 0) {
+            $this->fail("Invalid Action");
+        }
+        if($this->input->post('type') != 'wr' && $this->input->post('type') != 'lg') {
+            $this->fail("Invalid Action");
+        }
+        if($this->input->post('action') != 'enable' && $this->input->post('action') != 'disable') {
+            $this->fail("Invalid Action");
+        }
+        
+        $type = $this->input->post('type');
+        $action = $this->input->post('action');
+        if($type == 'lg' && $action == 'enable') {
+            $column = 'is_login_locked';
+            $value = 0;
+        } else if($type == 'lg' && $action == 'disable') {
+            $column = 'is_login_locked';
+            $value = 1;
+        } else if($type == 'wr' && $action == 'enable') {
+            $column = 'is_wr_locked';
+            $value = 0;
+        } else if($type == 'wr' && $action == 'disable') {
+            $column = 'is_wr_locked';
+            $value = 1;
+        }
+        
+        $this->general_model->update('member', $member['id'], array($column => $value));
+        
+        $this->success("Status Updated");
+    }
 }

@@ -82,8 +82,8 @@
 
                             </div>
                             <div class="text-center">
-                                <h1 class="fw-600 p-t-20"><?php echo $downlineCount ?></h1>
-                                <p class="text-muted fw-600">Total Downlines</p>
+                                <h1 class="fw-600 p-t-20"><?php echo number_format($totalComm, 2) ?></h1>
+                                <p class="text-muted fw-600">Total Commission</p>
                             </div>
                         </div>
                     </div>
@@ -110,16 +110,18 @@
                             <span class="text-muted">My Rank: </span>
                             <span class="text-success fw-600"> <?php echo getRank($rank) ?></span>
                         </p>
+                        <?php if($rank < 5) { ?>
                         <p>
                             <span class="text-muted">My Accumulated Sales: </span>
                             <span class="text-success fw-600"> <?php echo $total_sales ?> Box(es)</span>
                         </p>
+                        <?php } ?>
                         <hr>
                         <?php foreach($rankDetails as $r) { ?>
                         <div class="m-b-10">
                             <div class="row">
                                 <div class="col">
-                                    <p class="m-b-5 text-info"><?php echo $r['name'] ?> <span class="text-muted"><?php echo $r['uprank_limit'] ?> Box(es)</span></p>
+                                    <p class="m-b-5 text-info"><?php echo $r['name'] ?> <span class="text-muted"><?php echo $r['uprank_limit'] ?> Boxes</span></p>
                                 </div>
                                 <div class="col-auto text-right">
                                     <div class="<?php echo $r['percentage'] == 100 ? 'text-success' : 'text-muted' ?>"><?php echo $r['percentage'] ?>% Complete</div>
@@ -166,12 +168,23 @@
                         <div class="list-group-item d-flex  align-items-center">
                             <div class="m-r-20">
                                 <div class="avatar avatar-sm ">
-                                    <div class="avatar-title rounded-circle bg-warning"><?php echo strtoupper($sponsor_id[0]) ?></div>
+                                    <div class="avatar-title rounded-circle bg-warning"><?php echo $sponsor_id != '' ? strtoupper($sponsor_id[0]) : 'S' ?></div>
                                 </div>
                             </div>
                             <div class="">
                                 <div class="name"><?php echo $sponsor_id ?></div>
                                 <div class="text-muted">Upline ID</div>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex  align-items-center">
+                            <div class="m-r-20">
+                                <div class="avatar avatar-sm ">
+                                    <div class="avatar-title rounded-circle bg-secondary">D</div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="name"><?php echo $downlineCount ?></div>
+                                <div class="text-muted">Total Downlines</div>
                             </div>
                         </div>
                     </div>

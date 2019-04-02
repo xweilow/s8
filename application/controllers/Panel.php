@@ -25,6 +25,10 @@ class Panel extends MY_Controller {
                 unset($_SESSION['user_privilege']);
                 refreshFunc('panel/login');
             }
+            
+            if($this->uri->segment(2) != 'orders' && $this->data['own_sales'] == 0) {
+                refreshFunc('panel/orders');
+            }
         }
     }
     
@@ -32,10 +36,16 @@ class Panel extends MY_Controller {
         $this->data['title'] = 'Panel';
         
         $this->data['downlineCount'] = $this->production_model->getDownlineCount(AN());
+        $this->data['totalComm'] = $this->general_model->sum('wallet_transaction', array('account_name' => AN(), 'description' => 'payout_commission', 'is_approved' => 1, 'is_deleted' => 0), 'amount');
         $this->data['news'] = $this->general_model->first('news', array('type' => 'default', 'language' => 'english', 'is_deleted' => 0));
         $this->data['rankDetails'] = array_reverse($this->general_model->find('rank', array('id <' => 5)));
         foreach($this->data['rankDetails'] as $key => $value) {
-            $this->data['rankDetails'][$key]['percentage'] = $this->data['rankDetails'][$key]['uprank_limit'] > 0 ? number_format(($this->data['total_sales']/$this->data['rankDetails'][$key]['uprank_limit'])*100, 2) : 100;
+            if($this->data['rankDetails'][$key]['uprank_limit'] == 0) {
+                $percentage = 100;
+            } else {
+                $percentage = ($this->data['total_sales']/$this->data['rankDetails'][$key]['uprank_limit'])*100;
+            }
+            $this->data['rankDetails'][$key]['percentage'] = $percentage > 100 ? number_format(100, 2) : number_format($percentage, 2);
         }
         $this->data['rankDetails'] = array_reverse($this->data['rankDetails']);
         
@@ -59,7 +69,7 @@ class Panel extends MY_Controller {
     public function genealogy() {
         $this->data['title'] = 'Genealogy';
         $this->data['downlines'] = $this->production_model->getAllDownlines(AN());
-        $this->loadPage('genealogy2', $this->data);
+        $this->loadPage('genealogy', $this->data);
     }
     
     public function orders() {
@@ -69,7 +79,7 @@ class Panel extends MY_Controller {
         $this->data['price'] = $currentRank['price'];
 
         if($this->data['rank'] >= 4) {
-            $this->data['limit'] = "No Limit";
+            $this->data['limit'] = "1000000";
         } else {
             $nextRank = $this->general_model->get('rank', $this->data['rank'] + 1);
             $this->data['limit'] = $nextRank['uprank_limit'] - $this->data['total_sales'];

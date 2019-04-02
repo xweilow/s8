@@ -24,21 +24,6 @@
     <div class="container  pull-up">
         <div class="row">
             <div class="col-lg-12">
-                <?php if($ic_status != 1) { ?>
-                <div class="alert alert-border-danger alert-dismissible fade show" role="alert">
-                    <div class="d-flex">
-                        <div class="icon">
-                            <i class="icon mdi mdi-alert-octagram"></i>
-                        </div>
-                        <div class="content" style="margin-top: 7px;">
-                            New Order Is Only Available After Identity Verification.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <?php } ?>
                 <?php if($pendingOrder > 0) { ?>
                 <div class="alert alert-border-danger alert-dismissible fade show" role="alert">
                     <div class="d-flex">
@@ -61,16 +46,16 @@
                     </div>
                     <div class="card-body ">
                         <form id="form-order">
-                            <fieldset <?php if($ic_status != 1 || $pendingOrder > 0) { echo "disabled"; } ?>>
+                            <fieldset>
                                 <div class="form-row">
                                     <div class="form-group col-md-6 m-b-0">
                                         <div class="form-group col-md-12">
-                                            <label for="">Downline Pending Order (Boxes)</label>
+                                            <label for="">Self / Downline Pending Order (Boxes)</label>
                                             <input type="text" class="form-control text-center" id="" value="<?php echo $downlinePendingOrder ?>" disabled>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="">Purchase Limit (Boxes)</label>
-                                            <input type="text" class="form-control text-center" id="" value="<?php echo $limit ?>" disabled>
+                                            <input type="text" class="form-control text-center" id="" value="<?php echo $rank >= 4 ? 'No Limit' : $limit ?>" disabled>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="">Price Per Box (RM)</label>
@@ -193,6 +178,10 @@
                 LLC.displayError("Please Fill In All Required Fields");
                 return false;
             }
+        }
+        if($('#quantity').val() <= 0 || $('#quantity').val()%10 > 0) {
+            LLC.displayError("Please Input Valid Quantity");
+            return false;
         }
         if($("#receipt")[0].files.length > 0 && !LLC.checkFileExtension($('#receipt').val())) {
             LLC.displayError("Invalid File Format");

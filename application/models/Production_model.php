@@ -32,6 +32,7 @@ class Production_model extends MY_Model {
             'ic' => $data['ic'],
             'email' => $data['email'],
             'mobile' => $data['mobile'],
+            'current_price' => $data['current_price'],
             'created_by' => AN(),
         ));
         
@@ -112,8 +113,8 @@ class Production_model extends MY_Model {
             AND so.is_rejected = 0
             AND so.is_deleted = 0
             AND m.is_deleted = 0
-            AND (m.sponsor_id = ? OR m.sponsor_upline_ids like ?)";
-        $result = $this->db->query($q, array($account_name, '%,'.$account_name.',%'))->row();
+            AND (so.account_name = ? OR m.sponsor_id = ? OR m.sponsor_upline_ids like ?)";
+        $result = $this->db->query($q, array($account_name, $account_name, '%,'.$account_name.',%'))->row();
         
         if($result->quantity > 0) {
             return $result->quantity;
@@ -122,8 +123,8 @@ class Production_model extends MY_Model {
     }
     
     public function getFirstLevelSales($account_name) {
-        $q = "SELECT * FROM member m WHERE m.is_deleted = 0 AND (m.sponsor_id = ? OR m.sponsor_upline_ids like ?) and own_sales > 0";
-        return $this->db->query($q, array($account_name, '%,'.$account_name.',%'))->result_array();
+        $q = "SELECT * FROM member m WHERE m.is_deleted = 0 AND m.sponsor_id = ? and own_sales > 0";
+        return $this->db->query($q, array($account_name))->result_array();
     }
     
     public function getPendingDocument() {
@@ -166,39 +167,44 @@ class Production_model extends MY_Model {
     public function payCommission($data) {
         $str = "";
         foreach(explode(',', $data['sponsor_upline_ids']) as $key => $value) {
+            if($value == '') {
+                continue;
+            }
             $str .= "'".$value."',";
         }
         $str = rtrim($str, ",");
         
-        $q = "SELECT account_name, current_price FROM member WHERE account_name IN ($str) AND is_deleted = 0 order by sponsor_lvl desc";
-        $uplines = $this->db->query($q)->result_array();
-        
-        $previousPrice = $data['price'];
-        foreach($uplines as $upline) {
-            if($upline['current_price'] >= $previousPrice) {
-                continue;
+        $finalUpline = '';
+        if($str != '') {
+            $q = "SELECT account_name, current_price FROM member WHERE account_name IN ($str) AND is_deleted = 0 order by sponsor_lvl desc";
+            $uplines = $this->db->query($q)->result_array();
+
+            $previousPrice = $data['price'];
+            foreach($uplines as $upline) {
+                if($upline['current_price'] >= $previousPrice) {
+                    continue;
+                }
+
+                $comm = ($previousPrice - $upline['current_price'])*$data['quantity'];
+
+                $details = array(
+                    'account_name' => $upline['account_name'],
+                    'account_name_2' => $data['account_name'],
+                    'wallet_type' => 'cash_wallet',
+                    'amount' => $comm,
+                    'description' => 'payout_commission',
+                    'description2' => "Commission Payout",
+                    'tx_type' => 'payout',
+                    'sub_tx_type' => 'commission',
+                    'remark' => 'OR-'.$data['orderId']
+                );
+
+                $this->walletTransaction($details);
+
+                $previousPrice = $upline['current_price'];
+                $finalUpline = $upline['account_name'];
             }
-            
-            $comm = ($previousPrice - $upline['current_price'])*$data['quantity'];
-            
-            $details = array(
-                'account_name' => $upline['account_name'],
-                'account_name_2' => $data['account_name'],
-                'wallet_type' => 'cash_wallet',
-                'amount' => $comm,
-                'description' => 'payout_commission',
-                'description2' => "Commission Payout",
-                'tx_type' => 'payout',
-                'sub_tx_type' => 'commission',
-                'remark' => 'OR-'.$data['orderId']
-            );
-            
-            $this->walletTransaction($details);
-            
-            $previousPrice = $upline['current_price'];
-            $finalUpline = $upline['account_name'];
         }
-        
         return $finalUpline;
     }
     
@@ -213,7 +219,123 @@ class Production_model extends MY_Model {
     }
     
     public function getSales() {
-        $q = "SELECT date(approved_at) as date, sum(quantity) as quantity FROM stock_order WHERE is_approved = 1 AND is_rejected = 0 AND is_deleted = 0 GROUP BY date(approved_at)";
+        $q = "SELECT date(approved_at) as date, sum(total_price) as total_price FROM stock_order WHERE is_approved = 1 AND is_rejected = 0 AND is_deleted = 0 GROUP BY date(approved_at)";
+        return $this->db->query($q)->result_array();
+    }
+    
+    public function getTopSales() {
+        $q = "SELECT own_sales FROM member WHERE is_deleted = 0 AND own_sales > 0 GROUP BY own_sales ORDER BY own_sales desc LIMIT 5";
+        $salesAmount = $this->db->query($q)->result_array();
+        
+        $str = '';
+        if(sizeof($salesAmount) > 0) {
+            foreach($salesAmount as $amount) {
+                $str .= $amount['own_sales'].',';
+            }
+        }
+        $str = rtrim($str, ',');
+        
+        $result = [];
+        
+        if($str != '') {
+            $q = "SELECT created_at, account_name, rank, own_sales, total_sales FROM member WHERE own_sales in ($str) AND is_deleted = 0 ORDER BY own_sales DESC";
+            $members = $this->db->query($q)->result_array();
+
+            if(sizeof($members) > 0) {
+                $oriSales = $members[0]['own_sales'];
+                $count = 0;
+                foreach($members as $member) {
+                    if($count >= 5 && $member['own_sales'] < $oriSales) {
+                        break;
+                    }
+
+                    $result[] = $member;
+                    $count++;
+                    $oriSales = $member['own_sales'];
+                }
+            }
+        }
+        
+        return $result;
+    }
+    
+    public function getMemberCount($interval) {
+        $today = date('Y-m-d');
+        $result = $this->db->query("SELECT count(id) as total FROM member where created_at > DATE_ADD(?, INTERVAL - $interval)", array($today))->row();
+        if($result->total > 0)
+			return $result->total;
+
+		return 0;
+    }
+    
+    public function getTotalSales($interval) {
+        $today = date('Y-m-d');
+        $result = $this->db->query("SELECT sum(total_price) as total FROM stock_order where is_approved = 1 AND is_deleted = 0 AND approved_at > DATE_ADD(?, INTERVAL - $interval)", array($today))->row();
+        if($result->total > 0)
+			return $result->total;
+
+		return 0;
+    }
+    
+    public function getTotalCommission($interval) {
+        $today = date('Y-m-d');
+        $result = $this->db->query("SELECT sum(amount) as total FROM wallet_transaction where description = 'payout_commission' AND is_approved = 1 AND is_deleted = 0 AND approved_at > DATE_ADD(?, INTERVAL - $interval)", array($today))->row();
+        if($result->total > 0)
+			return $result->total;
+
+		return 0;
+    }
+    
+    public function getTotalWr($interval) {
+		$today = date('Y-m-d');
+        $result = $this->db->query("SELECT sum(amount) as total FROM withdrawal_request where is_approved = 1 AND approved_at > DATE_ADD(?, INTERVAL - $interval) AND is_deleted = 0", array($today))->row();
+        if($result->total > 0)
+			return $result->total;
+
+		return 0;
+	}
+    
+    public function getSalesByDate() {
+        $today = date('Y-m-d');
+        $q = "SELECT dayname(date(approved_at)) as date, sum(total_price) as sales FROM stock_order WHERE is_approved = 1 AND is_deleted = 0 AND approved_at > DATE_ADD(?, INTERVAL - 1 WEEK) GROUP BY date(approved_at)";
+        return $this->db->query($q, array($today))->result_array();
+    }
+    
+    public function getMemberListing($data) {
+        $cond = '';
+        if(isset($data['account_name'])) {
+            $cond .= " AND account_name like '%$data[account_name]%'";
+        }
+        if(isset($data['sponsor_id'])) {
+            $cond .= " AND sponsor_id = '$data[sponsor_id]'";
+        }
+        if(isset($data['rank'])) {
+            $cond .= " AND rank = '$data[rank]'";
+        }
+        if(isset($data['fname'])) {
+            $cond .= " AND fname like '%$data[fname]%'";
+        }
+        if(isset($data['ic'])) {
+            $cond .= " AND ic like '%$data[ic]%'";
+        }
+        if(isset($data['is_login_locked'])) {
+            $cond .= " AND is_login_locked = 1";
+        }
+        if(isset($data['is_wr_locked'])) {
+            $cond .= " AND is_wr_locked = 1";
+        }
+        
+        $q = "SELECT * FROM member WHERE is_deleted = 0 $cond";
+        return $this->db->query($q)->result_array();
+    }
+    
+    public function getMonthlyReportSales() {
+        $q = "SELECT year(approved_at) as year, month(approved_at) as month, sum(quantity) as quantity, sum(total_price) as total_price, count(id) as count FROM stock_order WHERE is_approved = 1 AND is_rejected = 0 AND is_deleted = 0 GROUP BY year(approved_at), month(approved_at)";
+        return $this->db->query($q)->result_array();
+    }
+    
+    public function getMonthlyReportWr() {
+        $q = "SELECT year(approved_at) as year, month(approved_at) as month, sum(amount) as amount, count(id) as count FROM withdrawal_request WHERE is_approved = 1 AND is_rejected = 0 AND is_deleted = 0 GROUP BY year(approved_at), month(approved_at)";
         return $this->db->query($q)->result_array();
     }
 }
