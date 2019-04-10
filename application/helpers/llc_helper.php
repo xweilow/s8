@@ -75,8 +75,8 @@ function getRank($rank) {
     } else if($rank == 3) {
         return "Platinum";
     } else if($rank == 4) {
-        return "Diamond";
+        return "Exclusive Benefits";
     } else if($rank == 5) {
-        return "Challenger";
+        return "Private Club";
     }
 }

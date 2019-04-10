@@ -30,23 +30,7 @@
                     <div class="card-body">
                         <div class="text-center p-t-20">
                             <div class="avatar-lg avatar">
-                                <div class="avatar-title rounded-circle badge-soft-danger"><i class="mdi mdi-heart h1 m-0"></i></div>
-
-                            </div>
-                            <div class="text-center">
-                                <h1 class="fw-600 p-t-20"><?php echo getRank($rank) ?></h1>
-                                <p class="text-muted fw-600">Rank</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 m-b-30">
-                <div class="card card-hover">
-                    <div class="card-body">
-                        <div class="text-center p-t-20">
-                            <div class="avatar-lg avatar">
-                                <div class="avatar-title rounded-circle badge-soft-info"><i class="mdi mdi-cash-usd h1 m-0"></i></div>
+                                <div class="avatar-title rounded-circle badge-soft-info"><i class="mdi mdi-wallet h1 m-0"></i></div>
 
                             </div>
                             <div class="text-center">
@@ -78,12 +62,28 @@
                     <div class="card-body">
                         <div class="text-center p-t-20">
                             <div class="avatar-lg avatar">
-                                <div class="avatar-title rounded-circle badge-soft-success"><i class="mdi mdi-account-multiple h1 m-0"></i></div>
+                                <div class="avatar-title rounded-circle badge-soft-success"><i class="mdi mdi-cash-usd h1 m-0"></i></div>
 
                             </div>
                             <div class="text-center">
                                 <h1 class="fw-600 p-t-20"><?php echo number_format($totalComm, 2) ?></h1>
                                 <p class="text-muted fw-600">Total Commission</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 m-b-30">
+                <div class="card card-hover">
+                    <div class="card-body">
+                        <div class="text-center p-t-20">
+                            <div class="avatar-lg avatar">
+                                <div class="avatar-title rounded-circle badge-soft-danger"><i class="mdi mdi-account-multiple h1 m-0"></i></div>
+
+                            </div>
+                            <div class="text-center">
+                                <h1 class="fw-600 p-t-20"><?php echo $downlineCount ?></h1>
+                                <p class="text-muted fw-600">Total Downline</p>
                             </div>
                         </div>
                     </div>
@@ -139,6 +139,19 @@
             </div>
             <div class="col-lg-4 m-b-30">
                 <div class="card m-b-30">
+                    <div class="card-body m-t-10">
+                        <div class="text-center">
+                            <div>
+                                <span class="h3 fw-600">Ranking</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-media m-b-20" style="text-align: center;">
+                        <img src="<?php echo base_url() ?>img/rank<?php echo $rank ?>.png" alt="" style="width: 85%;">
+                    </div>
+                </div>
+                <div class="card m-b-30">
                     <div class="card-header">
                         <h3>Account Details</h3>
                     </div>
@@ -174,17 +187,6 @@
                             <div class="">
                                 <div class="name"><?php echo $sponsor_id ?></div>
                                 <div class="text-muted">Upline ID</div>
-                            </div>
-                        </div>
-                        <div class="list-group-item d-flex  align-items-center">
-                            <div class="m-r-20">
-                                <div class="avatar avatar-sm ">
-                                    <div class="avatar-title rounded-circle bg-secondary">D</div>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="name"><?php echo $downlineCount ?></div>
-                                <div class="text-muted">Total Downlines</div>
                             </div>
                         </div>
                     </div>
