@@ -23,7 +23,7 @@
     </div>
     <div class="container  pull-up">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-8">
                 <?php if($pendingOrder > 0) { ?>
                 <div class="alert alert-border-danger alert-dismissible fade show" role="alert">
                     <div class="d-flex">
@@ -68,7 +68,7 @@
                                                     <input type="number" class="form-control text-center" id="quantity" value="0" required disabled>
                                                 </div>
                                                 <div class="col-md-4 text-right">
-                                                    <button type="button" class="btn m-b-15 ml-2 mr-2 btn-rounded-circle btn-dark btn-minus"><i class="mdi mdi-minus"></i></button>
+                                                    <button type="button" class="btn m-b-15 mr-2 btn-rounded-circle btn-dark btn-minus"><i class="mdi mdi-minus"></i></button>
                                                     <button type="button" class="btn m-b-15 btn-rounded-circle btn-dark btn-plus"><i class="mdi mdi-plus"></i></button>
                                                 </div>
                                             </div>
@@ -120,11 +120,16 @@
                                         </div>
                                         <div class="form-group col-md-12 deliver-tab" style="display: none;">
                                             <label for="state">State <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="state" value="<?php echo $state ?>">
+                                            <select class="form-control" id="state" required>
+                                                <option value='0'>-</option>
+                                                <?php foreach($allStates as $s) { ?>
+                                                <option value='<?php echo $s['id'] ?>' <?php if($state == $s['id']) { echo "selected"; } ?>><?php echo $s['name'] ?></option>
+                                                <?php } ?>
+                                            </select>
                                         </div>
                                         <div class="form-group col-md-12 deliver-tab" style="display: none;">
                                             <label for="country">Country <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="country" value="<?php echo $country ?>">
+                                            <input type="text" class="form-control" id="country" value="Malaysia" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -133,6 +138,29 @@
                                 </div>
                             </fieldset>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card m-b-30">
+                    <div class="card-header">
+                        <div class="avatar mr-2 avatar-xs">
+                            <div class="avatar-title bg-dark rounded-circle">
+                                <i class="mdi mdi-bank mdi-18px"></i>
+                            </div>
+                        </div>
+                        Bank Information
+                    </div>
+                    <div class="list-group list  list-group-flush">
+                        <div class="list-group-item ">
+                            <i class="mdi mdi-bank" style="margin-right: 10px;"></i>  Maybank
+                        </div>
+                        <div class="list-group-item ">
+                            <i class="mdi mdi-account" style="margin-right: 10px;"></i>  Perfect Body Corner
+                        </div>
+                        <div class="list-group-item ">
+                            <i class="mdi mdi-credit-card" style="margin-right: 10px;"></i>  512820074907
+                        </div>
                     </div>
                 </div>
             </div>

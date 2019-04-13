@@ -31,6 +31,12 @@ class Production extends MY_Controller {
         if($this->input->post("delivery_type") != 1 && $this->input->post("delivery_type") != 2) {
             $this->fail("Invalid Delivery Option");
         }
+        if($this->input->post("delivery_type") == 2) {
+            $selectedState = $this->general_model->count('state', array('id' => $this->input->post('state'), 'is_deleted' => 0));
+            if($selectedState == 0) {
+                $this->fail("Invalid State Selected");
+            }
+        }
         
         $receiver = $this->input->post("delivery_type") != 2 ? '' : $this->input->post('receiver');
         $mobile = $this->input->post("delivery_type") != 2 ? '' : $this->input->post('mobile');
@@ -60,6 +66,18 @@ class Production extends MY_Controller {
             'state' => $state,
             'country' => $country
         ));
+        
+        if($member['is_modified'] == 0 && $this->input->post("delivery_type") == 2) {
+            $this->general_model->update('member', $member['id'], array(
+                'addressline1' => $addressline1,
+                'addressline2' => $addressline2,
+                'city' => $city,
+                'postcode' => $postcode,
+                'state' => $state,
+                'country' => $country,
+                'is_modified' => 1
+            ));
+        }
         
         $this->success("Order Created");
     }
@@ -292,9 +310,21 @@ class Production extends MY_Controller {
         }
         
         // **************************
-        // Update Own Sales
+        // Pay Commission
         // **************************
         $member = $this->production_model->getMember($order['account_name']);
+        $data = array(
+            'quantity' => $order['quantity'],
+            'account_name' => $member['account_name'],
+            'price' => $order['price'],
+            'orderId' => $order['id'],
+            'sponsor_upline_ids' => $member['sponsor_upline_ids']
+        );
+        $deliverPayoutUpline = $this->production_model->payCommission($data);
+        
+        // **************************
+        // Update Own Sales
+        // **************************
         $this->general_model->update('member', $member['id'], array(
             'own_sales' => $member['own_sales'] + $order['quantity'],
             'total_sales' => $member['total_sales'] + $order['quantity']
@@ -321,27 +351,16 @@ class Production extends MY_Controller {
         }
         
         // **************************
-        // Pay Commission
-        // **************************
-        $data = array(
-            'quantity' => $order['quantity'],
-            'account_name' => $member['account_name'],
-            'price' => $order['price'],
-            'orderId' => $order['id'],
-            'sponsor_upline_ids' => $member['sponsor_upline_ids']
-        );
-        $deliverPayoutUpline = $this->production_model->payCommission($data);
-        
-        // **************************
         // Deduct Delivery Fee
         // **************************
         if($order['delivery_option'] == 2) {
             $deliverPayoutUpline = $deliverPayoutUpline == '' ? $member['account_name'] : $deliverPayoutUpline;
+            $state = $this->general_model->get('state', $order['state']);
             $data = array(
                 'account_name' => $deliverPayoutUpline,
                 'account_name_2' => $member['account_name'],
                 'wallet_type' => 'cash_wallet',
-                'amount' => ($order['quantity']/10)*10*(-1),
+                'amount' => ($order['quantity']/10)*$state['shipping_fee']*(-1),
                 'description' => 'fee',
                 'description2' => "Delivery Fee",
                 'tx_type' => 'fee',

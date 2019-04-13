@@ -58,6 +58,7 @@ class Panel extends MY_Controller {
     
     public function profile() {
         $this->data['title'] = 'Profile';
+        $this->data['states'] = array_reverse($this->general_model->find('state', array('is_deleted' => 0)));
     	$this->loadPage('profile', $this->data);
     }
     
@@ -85,6 +86,8 @@ class Panel extends MY_Controller {
             $this->data['limit'] = $nextRank['uprank_limit'] - $this->data['total_sales'];
         }
 
+        
+        $this->data['allStates'] = array_reverse($this->general_model->find('state', array('is_deleted' => 0)));
         $this->data['pendingOrder'] = $this->general_model->count('stock_order', array('account_name' => AN(), 'is_approved' => 0, 'is_rejected' => 0, 'is_deleted' => 0));
         $this->data['downlinePendingOrder'] = $this->production_model->getDownlinePendingOrder(AN());
 
@@ -94,7 +97,18 @@ class Panel extends MY_Controller {
     public function reports($page = '') {
         if($page == 'orders') {
             $this->data['title'] = 'Order History';
+            $allStates = $this->general_model->find('state', array('is_deleted' => 0));
+            $states = [];
+            foreach($allStates as $s) {
+                $states[$s['id']] = $s['name'];
+            }
             $this->data['records'] = $this->general_model->find('stock_order', array('account_name' => AN(), 'is_deleted' => 0));
+            foreach($this->data['records'] as $key => $value) {
+                if($value['delivery_option'] == 2) {
+                    $this->data['records'][$key]['state'] = $states[$this->data['records'][$key]['state']];
+                }
+            }
+            
             $this->loadPage('report_orders', $this->data);
         } else if($page == 'wallet') {
             $this->data['title'] = 'Wallet History';

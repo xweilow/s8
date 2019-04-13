@@ -90,8 +90,8 @@
                                             <div class="row m-b-10">
                                                 <div class="col-12">
                                                     <div class="pending-tab">
-                                                        <button class="btn btn-sm btn-success btn-approve" style="width: 80px;" data-id="<?php echo $record['id'] ?>">Approve</button>
-                                                        <button class="btn btn-sm btn-danger btn-reject" style="width: 80px;" data-id="<?php echo $record['id'] ?>">Reject</button>
+                                                        <button class="btn btn-sm btn-success btn-approve" style="width: 80px; margin-top: 5px;" data-id="<?php echo $record['id'] ?>">Approve</button>
+                                                        <button class="btn btn-sm btn-danger btn-reject" style="width: 80px; margin-top: 5px;" data-id="<?php echo $record['id'] ?>">Reject</button>
                                                         <input type="text" class="form-control remark" placeholder="Remark" style="margin-top: 5px;">
                                                     </div>
                                                     <div class="approved-tab" style='display: none;'>

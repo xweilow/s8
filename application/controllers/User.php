@@ -159,7 +159,8 @@ class User extends MY_Controller {
             'city' => $this->input->post('city'),
             'postcode' => $this->input->post('postcode'),
             'state' => $this->input->post('state'),
-            'country' => $this->input->post('country')
+            'country' => $this->input->post('country'),
+            'is_modified' => 1
         ));
         
         $this->success("Address Information Updated Successfully");

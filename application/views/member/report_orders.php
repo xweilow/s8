@@ -83,7 +83,7 @@
                                                 echo $record['mobile']."<br />";
                                                 echo $record['addressline1']."<br />";
                                                 echo $record['addressline2'] == "" ? "" : $record['addressline2']."<br />";
-                                                echo $record['postcode']." ".$record['city'];
+                                                echo $record['postcode']." ".$record['city']."<br />";
                                                 echo $record['state']."<br />";
                                                 echo $record['country']."<br />";
                                             } ?>

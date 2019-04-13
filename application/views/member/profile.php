@@ -216,11 +216,16 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-6">
                                                     <label for="state">State <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="state" value="<?php echo $state ?>" required>
+                                                    <select class="form-control" id="state" required>
+                                                        <option value=''>-</option>
+                                                        <?php foreach($states as $s) { ?>
+                                                        <option value='<?php echo $s['id'] ?>' <?php if($state == $s['id']) { echo "selected"; } ?>><?php echo $s['name'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="country">Country <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="country" value="<?php echo $country ?>" required>
+                                                    <input type="text" class="form-control" id="country" value="Malaysia" required disabled>
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-success llc_submit">Update</button>

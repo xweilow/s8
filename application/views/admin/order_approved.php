@@ -76,7 +76,7 @@
                                             </div>
                                         </td>
                                         <?php if($record['delivery_option'] == 1) { ?>
-                                        <td  class="text-left">Self Pick-Up</td>
+                                        <td>Self Pick-Up</td>
                                         <?php } else { ?>
                                         <td class="text-left">
                                             <?php echo $record['receiver'] ?><br />

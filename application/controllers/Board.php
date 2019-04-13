@@ -65,7 +65,19 @@ class Board extends MY_Controller {
             $this->loadPage('document', $this->data);
         } else if($page == 'listing') {
             $this->data['title'] = 'Member Listing';
+            $allStates = $this->general_model->find('state', array('is_deleted' => 0));
+            $states = [];
+            foreach($allStates as $s) {
+                $states[$s['id']] = $s['name'];
+            }
             $this->data['members'] = $this->production_model->getMemberListing($_GET);
+            foreach($this->data['members'] as $key => $value) {
+                if($this->data['members'][$key]['state'] > 0) {
+                    $this->data['members'][$key]['state'] = $states[$this->data['members'][$key]['state']];
+                } else {
+                    $this->data['members'][$key]['state'] = '';
+                }
+            }
             $this->loadPage('member', $this->data);
         } else if($page == 'edit') {
             $this->data['title'] = 'Member Edit';
@@ -73,6 +85,7 @@ class Board extends MY_Controller {
             if(sizeof($this->data['member']) == 0) {
                 refreshFunc('board/members/listing');
             }
+            $this->data['states'] = array_reverse($this->general_model->find('state', array('is_deleted' => 0)));
             $this->loadPage('member_edit', $this->data);
         }
     }
@@ -80,17 +93,43 @@ class Board extends MY_Controller {
     public function orders($page = '') {
         $this->data['title'] = 'Orders Management';
         
+        $allStates = $this->general_model->find('state', array('is_deleted' => 0));
+        $states = [];
+        foreach($allStates as $s) {
+            $states[$s['id']] = $s['name'];
+        }
+        
         if($page == 'pending') {
             $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 0, 'is_rejected' => 0, 'is_deleted' => 0));
+            foreach($this->data['records'] as $key => $value) {
+                if($this->data['records'][$key]['delivery_option'] == 2) {
+                    $this->data['records'][$key]['state'] = $states[$this->data['records'][$key]['state']];
+                }
+            }
             $this->loadPage('order_pending', $this->data);
         } else if($page == 'approved') {
             $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 1, 'is_rejected' => 0, 'is_completed' => 0, 'is_deleted' => 0));
+            foreach($this->data['records'] as $key => $value) {
+                if($this->data['records'][$key]['delivery_option'] == 2) {
+                    $this->data['records'][$key]['state'] = $states[$this->data['records'][$key]['state']];
+                }
+            }
             $this->loadPage('order_approved', $this->data);
         } else if($page == 'completed') {
             $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 1, 'is_rejected' => 0, 'is_completed' => 1, 'is_deleted' => 0));
+            foreach($this->data['records'] as $key => $value) {
+                if($this->data['records'][$key]['delivery_option'] == 2) {
+                    $this->data['records'][$key]['state'] = $states[$this->data['records'][$key]['state']];
+                }
+            }
             $this->loadPage('order_completed', $this->data);
         } else if($page == 'rejected') {
             $this->data['records'] = $this->general_model->find('stock_order', array('is_approved' => 0, 'is_rejected' => 1, 'is_deleted' => 0));
+            foreach($this->data['records'] as $key => $value) {
+                if($this->data['records'][$key]['delivery_option'] == 2) {
+                    $this->data['records'][$key]['state'] = $states[$this->data['records'][$key]['state']];
+                }
+            }
             $this->loadPage('order_rejected', $this->data);
         }
     }
