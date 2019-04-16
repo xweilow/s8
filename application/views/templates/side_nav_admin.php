@@ -215,7 +215,7 @@
                 <li class="menu-item">
                     <a href="<?= base_url() ?>board/reports/directSales" class="menu-link">
                         <span class="menu-label">
-                            <span class="menu-name">Direct Downline Sales</span>
+                            <span class="menu-name">Direct Referrer Sales</span>
                         </span>
                         <span class="menu-icon">
                             <i class="icon-placeholder"><i class="icon-placeholder">D</i></i>

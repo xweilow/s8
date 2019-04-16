@@ -199,10 +199,10 @@ class User extends MY_Controller {
             $sponsor_id = trim(strtolower($this->input->post('sponsor_id')));
             $member = $this->production_model->getMember($sponsor_id);
             if(sizeof($member) == 0) {
-                $this->fail("Invalid Sponsor ID");
+                $this->fail("Invalid Introducer ID");
             }
             if($member['ic_status'] != 1) {
-                $this->fail("Sponsor ID Need To Be Verified To Register New Downline");
+                $this->fail("Introducer ID Need To Be Verified To Register New Referrer");
             }
         }
         

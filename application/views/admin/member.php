@@ -49,7 +49,7 @@
                                             </div>
                                             <div class="form-row">
                                                 <div class="form-group col-md-6">
-                                                    <label for="sponsor_id">Upline ID</label>
+                                                    <label for="sponsor_id">Introducer ID</label>
                                                     <input type="text" class="form-control" id="sponsor_id" value="">
                                                 </div>
                                                 <div class="form-group col-md-6">
@@ -114,7 +114,7 @@
                                             <tr style="text-align: center;">
                                                 <th style="min-width: 100px;">Joined At</th>
                                                 <th>Username</th>
-                                                <th class="all account">Upline ID</th>
+                                                <th class="all account">Introducer ID</th>
                                                 <th class="all account">Rank</th>
                                                 <th class="all account">Wallet</th>
                                                 <th class="all personal" style="min-width: 200px;">Full Name</th>

@@ -49,7 +49,7 @@ class Board extends MY_Controller {
             } else {
                 $member = $this->production_model->getMember($id);
                 if(sizeof($member) == 0) {
-                    $_SESSION['errmsg'] = 'Upline ID Not Found';
+                    $_SESSION['errmsg'] = 'Introducer ID Not Found';
                     $member = $this->general_model->get('member', 1);
                 }
             }

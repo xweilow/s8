@@ -50,7 +50,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6 m-b-0">
                                         <div class="form-group col-md-12">
-                                            <label for="">Self / Downline Pending Order (Boxes)</label>
+                                            <label for="">Self / Referrer Pending Order (Boxes)</label>
                                             <input type="text" class="form-control text-center" id="" value="<?php echo $downlinePendingOrder ?>" disabled>
                                         </div>
                                         <div class="form-group col-md-12">

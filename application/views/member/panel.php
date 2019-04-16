@@ -83,7 +83,7 @@
                             </div>
                             <div class="text-center">
                                 <h1 class="fw-600 p-t-20"><?php echo $downlineCount ?></h1>
-                                <p class="text-muted fw-600">Total Downline</p>
+                                <p class="text-muted fw-600">Total Referral</p>
                             </div>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
                             </div>
                             <div class="">
                                 <div class="name"><?php echo $sponsor_id ?></div>
-                                <div class="text-muted">Upline ID</div>
+                                <div class="text-muted">Introducer ID</div>
                             </div>
                         </div>
                     </div>

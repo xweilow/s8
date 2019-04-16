@@ -57,7 +57,7 @@
                             </div>
                             <div class="">
                                 <div class="name"><?php echo $directDownlines ?></div>
-                                <div class="text-muted">Direct Downline Count</div>
+                                <div class="text-muted">Direct Referrer Count</div>
                             </div>
                         </div>
                         <div class="list-group-item d-flex  align-items-center">
@@ -68,7 +68,7 @@
                             </div>
                             <div class="">
                                 <div class="name"><?php echo sizeof($downlines) ?></div>
-                                <div class="text-muted">Downline Count</div>
+                                <div class="text-muted">Referrer Count</div>
                             </div>
                         </div>
                         <div class="list-group-item d-flex  align-items-center">
@@ -109,7 +109,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="account_name">Upline ID <span class="text-danger">*</span></label>
+                                <label for="account_name">Introducer ID <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="account_name" required>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                                         <th>#</th>
                                         <th>Joined At</th>
                                         <th>Username</th>
-                                        <th>Upline ID</th>
+                                        <th>Introducer ID</th>
                                         <th>Sales (Boxes)</th>
                                         <th>Rank</th>
                                     </tr>

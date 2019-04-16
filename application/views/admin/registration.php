@@ -9,7 +9,7 @@
                         </div>
                         <div class="media-body">
                             <h1>Account Registration</h1>
-                            <p class="opacity-75">Please fill in downline information to proceed new account registration.</p>
+                            <p class="opacity-75">Please fill in referrer's information to proceed new account registration.</p>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                             <fieldset>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="sponsor_id">Upline ID <span class="text-danger">*</span></label>
+                                        <label for="sponsor_id">Introducer ID <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="sponsor_id" value="" required list="members">
                                         <datalist id='members'>
                                             <?php foreach ($members as $key => $n) { ?>

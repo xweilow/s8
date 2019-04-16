@@ -28,7 +28,7 @@
                                         <th>#</th>
                                         <th>Joined At</th>
                                         <th>Username</th>
-                                        <th>Downline Count</th>
+                                        <th>Referrer Count</th>
                                         <th>Own Sales (Boxes)</th>
                                         <th>Total Sales (Boxes)</th>
                                         <th>Rank</th>
@@ -55,8 +55,3 @@
         </div>
     </div>
 </section>
-<script>
-    $('.llc_submit').click(function() {
-        location = '<?php echo base_url() ?>board/members/genealogy/'+$("#account_name").val();
-    });
-</script>

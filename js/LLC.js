@@ -55,7 +55,7 @@ var LLC = {
             // settings
             z_index: 9999,
             type: 'danger',
-            template: '<div data-notify="container" class=" bootstrap-notify alert bg-dark text-white" role="alert" style="min-width: 450px;">' +
+            template: '<div data-notify="container" class=" bootstrap-notify alert bg-dark text-white" role="alert" style="width: 285px;">' +
             '<div class="progress" data-notify="progressbar">' +
             '<div class="progress-bar bg-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
             '</div>' +
@@ -81,7 +81,7 @@ var LLC = {
             // settings
             z_index: 9999,
             type: 'success',
-            template: '<div data-notify="container" class=" bootstrap-notify alert bg-dark text-white" role="alert" style="min-width: 450px;">' +
+            template: '<div data-notify="container" class=" bootstrap-notify alert bg-dark text-white" role="alert" style="width: 285px;">' +
             '<div class="progress" data-notify="progressbar">' +
             '<div class="progress-bar bg-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
             '</div>' +

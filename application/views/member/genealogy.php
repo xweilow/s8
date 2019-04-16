@@ -28,7 +28,7 @@
                                         <th>#</th>
                                         <th>Joined At</th>
                                         <th>Username</th>
-                                        <th>Upline ID</th>
+                                        <th>Introducer ID</th>
                                         <th>Sales (Boxes)</th>
                                         <th>Rank</th>
                                     </tr>
