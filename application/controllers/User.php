@@ -115,6 +115,10 @@ class User extends MY_Controller {
             'ic_remark' => ''
         ));
         
+        if($member['bank_file_path'] != '' && $member['bank_status'] != 2) {
+            $this->sendVerificationEmail();
+        }
+        
         $this->success("Personal Information Updated Successfully");
     }
     
@@ -145,6 +149,10 @@ class User extends MY_Controller {
             'bank_status' => 0,
             'bank_remark' => ''
         ));
+        
+        if($member['ic_file_path'] != '' && $member['ic_status'] != 2) {
+            $this->sendVerificationEmail();
+        }
         
         $this->success("Bank Information Updated Successfully");
     }
@@ -177,6 +185,37 @@ class User extends MY_Controller {
         $this->general_model->update('member', $member['id'], array('password' => hashPw($this->input->post('password'))));
         
         $this->success("Password Updated Successfully");
+    }
+    
+    private function sendVerificationEmail() {
+        $this->load->library('email');
+        $fromEmail = 'admin@perfects8.com';
+        $website = base_url();
+        
+        $this->email->set_mailtype("html");
+        $this->email->from($fromEmail, 'S-8');
+        $this->email->to('admin@perfects8.com');
+        $this->email->subject('New Identity Verification');
+        
+        $html = "<br />Dear admin,<br>
+				<br>
+                You have a member just uploaded their identity document and waiting for your approval. Please kindly check further details in system.
+                <br /><br /><br />
+                Sincerely, <br />
+                S-8 Community<br />
+                <br /><br /><br />
+                Email: $fromEmail<br />
+                Website: $website
+                ";
+        
+        $this->email->message($html);
+        
+        if ($this->email->send()) {
+	    	return true;
+	    } else {
+	    	log_message('debug', $this->email->print_debugger());
+			return false;
+	    }
     }
     
     public function signUp() {

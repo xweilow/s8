@@ -54,7 +54,7 @@ class MY_controller extends CI_Controller {
 		}
         
         $fileName = time().'_'.$_FILES[$uploadFile]['name'];
-        $valid_extensions = array("jpeg", "jpg", "png");
+        $valid_extensions = array("jpeg", "jpg", "png", "pdf");
         $temporary = explode(".", $_FILES[$uploadFile]["name"]);
         $file_extension = end($temporary);
         if((($_FILES[$uploadFile]["type"] == "image/png") || ($_FILES[$uploadFile]["type"] == "image/jpg") || ($_FILES[$uploadFile]["type"] == "image/jpeg")) && in_array($file_extension, $valid_extensions)){

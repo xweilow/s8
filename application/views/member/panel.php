@@ -191,6 +191,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="card m-b-30">
+                    <div class="card-header">
+                        <h3>Customer Support</h3>
+                    </div>
+                    <div class="list-group list  list-group-flush">
+                        <div class="list-group-item ">
+                            <i class="mdi mdi-information" style="margin-right: 10px;"></i>  support@perfects8.com
+                        </div>
+                        <div class="list-group-item ">
+                            <i class="mdi mdi-whatsapp" style="margin-right: 10px;"></i>  +60 10-668 8325
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

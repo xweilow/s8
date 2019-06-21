@@ -110,7 +110,7 @@ var LLC = {
         }
     },
     checkFileExtension: function(fName) {
-        var extensionLists = ['jpg', 'jpeg', 'png'];
+        var extensionLists = ['jpg', 'jpeg', 'png', 'pdf', 'JPG', 'JPEG', 'PNG', 'PDF'];
         return extensionLists.indexOf(fName.split('.').pop()) > -1;
     },
     checkEmailFormat: function (email) {
