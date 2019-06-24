@@ -31,3 +31,10 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 /application/sessions/*
 /uploads/*
+
+# SASS Files
+#-------------------------
+/node_modules
+gulpfile.js
+package-lock.json
+package.json

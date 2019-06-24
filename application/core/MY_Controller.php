@@ -9,9 +9,20 @@ class MY_controller extends CI_Controller {
         if(isset($_SESSION['account_name'])) {
             $accName = $_SESSION['account_name'];
         }
+
+        if(!$this->session->has_userdata('lang')){
+			$_SESSION['lang'] = 'english';
+		} else if($_SESSION['lang'] != 'english' && $_SESSION['lang'] != 'simplified-chinese'){
+			$_SESSION['lang'] = 'english';
+        }
+        
+        if($this->session->has_userdata('lang')){
+			$this->lang->load('web', $this->session->userdata('lang'));
+		}
         
         log_message('debug', 'URI: '.$_SERVER['REQUEST_URI'].' by '.$accName.' P: '.json_encode($this->input->post(),JSON_UNESCAPED_UNICODE));
         $this->load->helper('LLC');
+        $this->load->helper('language');
     }
     
     public function getRealIpAddr(){

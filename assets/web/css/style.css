@@ -1,0 +1,227 @@
+.display-table {
+  display: table;
+  width: 100%; }
+
+.display-cell {
+  display: table-cell;
+  vertical-align: middle; }
+
+body {
+  font-family: 'comfortaaregular', sans-serif;
+  font-size: 20px;
+  line-height: 1.3em;
+  font-weight: 400; }
+
+h2 {
+  margin: 40px 0 30px;
+  font-size: 25px;
+  font-weight: 700; }
+
+h3 {
+  font-size: 22px;
+  color: #C5B395;
+  margin: 20px 0;
+  font-weight: 700; }
+
+h5 {
+  font-weight: 300; }
+
+p {
+  margin-bottom: 40px;
+  line-height: 1.5em; }
+
+.text-gold {
+  color: #c8b597; }
+
+.mb-10 {
+  margin-bottom: 10px; }
+
+.separatorLine {
+  border-top: 1px solid #cacaca; }
+
+header .header-top {
+  border-bottom: 2px solid #e5e5e5;
+  padding: 20px 0; }
+  header .header-top a {
+    color: #C5B395;
+    font-size: 15px; }
+
+header .header-bottom .navbar .navbar-nav > li > a, header .header-bottom .navbar .dropdown-item {
+  font-size: 15px;
+  text-transform: uppercase; }
+
+header .header-bottom .navbar .dropdown-item {
+  text-transform: capitalize; }
+
+header .header-bottom .dropdown-menu {
+  background: rgba(197, 179, 149, 0.5);
+  border-radius: 5px;
+  position: relative;
+  border: 0; }
+
+header .header-bottom .dropdown-item:hover, header .header-bottom .dropdown-item.active {
+  background: #c5b395; }
+
+footer {
+  background-color: #F2EEE8;
+  padding: 40px;
+  margin-top: 30px; }
+  footer .footer-bottom {
+    padding-top: 40px; }
+
+section.banner {
+  padding-bottom: 14px; }
+
+section.benefits {
+  background-color: #f1f1f2; }
+
+section.steps {
+  padding-bottom: 48px; }
+
+section.product-cert {
+  padding-bottom: 10px;
+  margin-top: 20px; }
+  section.product-cert .cert-img {
+    height: 140px; }
+  section.product-cert .cert-preview img {
+    padding-right: 10px; }
+  section.product-cert .cert-preview a {
+    color: #000;
+    text-decoration: none; }
+
+section.ingredients-contain .row {
+  margin-left: 0;
+  margin-right: 0; }
+
+section.ingredients-contain .box {
+  height: 105px; }
+  section.ingredients-contain .box.box-1 {
+    background-color: #e4a292; }
+  section.ingredients-contain .box.box-2 {
+    background-color: #fedcac; }
+  section.ingredients-contain .box.box-3 {
+    background-color: #fffdd7; }
+  section.ingredients-contain .box.box-4 {
+    background-color: #cce7d4; }
+  section.ingredients-contain .box.box-5 {
+    background-color: #8dd8f8; }
+  section.ingredients-contain .box.box-6 {
+    background-color: #9a98c9; }
+  section.ingredients-contain .box.box-7 {
+    background-color: #d5c8e2; }
+  section.ingredients-contain .box.box-8 {
+    background-color: #e5cbd4; }
+
+section.suitable .suitable-text {
+  margin: 28px 20px;
+  line-height: 1.6em; }
+
+section.faq #accordion .card {
+  border-radius: 0; }
+  section.faq #accordion .card.card-1 {
+    background: #e0a190; }
+  section.faq #accordion .card.card-2 {
+    background: #ffddaf; }
+  section.faq #accordion .card.card-3 {
+    background: #fdfad7; }
+  section.faq #accordion .card.card-4 {
+    background: #cde8d5; }
+  section.faq #accordion .card.card-5 {
+    background: #e3c9d2; }
+  section.faq #accordion .card .card-header {
+    position: relative;
+    cursor: pointer; }
+    section.faq #accordion .card .card-header:after {
+      content: '\f068';
+      position: absolute;
+      right: 10px;
+      font-family: 'FontAwesome';
+      top: 50%;
+      transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -webkit-transform: translateY(-50%); }
+    section.faq #accordion .card .card-header.collapsed:after {
+      content: '\f067'; }
+  section.faq #accordion .card .card-body {
+    background: #f1f1f1; }
+
+section.contact form textarea {
+  width: 100%;
+  min-height: 50px;
+  max-height: 150px; }
+
+section.findus {
+  font-size: 14px; }
+
+section.join .box {
+  border: 1px solid #000; }
+  section.join .box.box-1 .box-header {
+    background: #cde8d5; }
+  section.join .box.box-2 .box-header {
+    background: #e3c9d2; }
+  section.join .box .box-header {
+    padding: 20px 0;
+    border-bottom: 1px solid #000; }
+  section.join .box .box-body {
+    padding: 15px 30px; }
+
+@media (max-width: 767px) {
+  footer .footer-left, footer .footer-center {
+    padding-bottom: 30px; }
+  header .header-top a {
+    font-size: 12px; }
+  section.product-cert [class^='col-md-'] {
+    padding-bottom: 20px; }
+  section.suitable .col-md-3 {
+    text-align: center; }
+    section.suitable .col-md-3 img {
+      margin: 0 auto; }
+  section.findus [class*='col-'] {
+    padding-bottom: 20px; } }
+
+@media (max-width: 991px) {
+  header .header-bottom .navbar {
+    padding-top: .5em;
+    padding-left: 0;
+    padding-right: 0; } }
+
+@media (min-width: 992px) {
+  header .header-bottom .navbar {
+    padding-top: 0;
+    padding-bottom: 0; }
+    header .header-bottom .navbar .navbar-nav > li > a {
+      border-top: 4px solid #ffffff;
+      display: inline-block;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      line-height: 1em; }
+      header .header-bottom .navbar .navbar-nav > li > a:hover, header .header-bottom .navbar .navbar-nav > li > a.active {
+        border-top: 4px solid #c8b597;
+        color: #c8b597; }
+    header .header-bottom .navbar .navbar-nav > li.show > a {
+      border-top: 4px solid #c8b597;
+      color: #c8b597; }
+  header .header-bottom .dropdown-menu {
+    width: 100%; }
+    header .header-bottom .dropdown-menu:before {
+      bottom: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(136, 183, 213, 0);
+      border-bottom-color: rgba(197, 179, 149, 0.5);
+      border-width: 15px;
+      margin-left: -15px; }
+  section.faq #accordion .card .card-header, section.faq #accordion .card .card-body {
+    padding-left: 50px; }
+  section.faq #accordion .card .card-header {
+    padding-right: 60px; }
+    section.faq #accordion .card .card-header:after {
+      right: 50px; }
+  section.faq #accordion .card .card-body {
+    line-height: 1.5em; } }

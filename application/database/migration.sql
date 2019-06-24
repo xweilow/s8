@@ -9,3 +9,5 @@ ALTER TABLE `withdrawal_request` ADD `bank_stat` VARCHAR(200) NOT NULL AFTER `cr
 ALTER TABLE `stock_order` ADD `courier_name` VARCHAR(200) NOT NULL AFTER `track_num`;
 -- import activation.sql
 
+-- import web_enquiry.sql
+
