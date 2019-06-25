@@ -4,7 +4,7 @@
                         <div class="col-md-6 footer-left">
                             <h5><?= lang('followus'); ?>:</h5>
                             <div class="socials">
-                                <a href="#"><img src="<?= base_url() ?>assets/web/images/icon-fb.png" alt=""></a>
+                                <a href="https://www.facebook.com/S-8-2094595877319903/" target="_blank"><img src="<?= base_url() ?>assets/web/images/icon-fb.png" alt=""></a>
                                 <a href="#"><img src="<?= base_url() ?>assets/web/images/icon-twitter.png" alt=""></a>
                                 <a href="#"><img src="<?= base_url() ?>assets/web/images/icon-linkedin.png" alt=""></a>
                                 <a href="#"><img src="<?= base_url() ?>assets/web/images/icon-instagram.png" alt=""></a>
