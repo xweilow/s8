@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>s8</title>
+    <title>S8</title>
+    <link rel="icon" type="image/x-icon" href="<?= base_url() ?>img/favicon.ico"/>
     <link rel="stylesheet" href="<?= base_url() ?>assets/web/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/web/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/web/css/fonts.css">
