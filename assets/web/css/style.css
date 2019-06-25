@@ -51,7 +51,8 @@ header .header-bottom .navbar .navbar-nav > li > a, header .header-bottom .navba
   text-transform: uppercase; }
 
 header .header-bottom .navbar .dropdown-item {
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  white-space: normal; }
 
 header .header-bottom .dropdown-menu {
   background: rgba(197, 179, 149, 0.5);
