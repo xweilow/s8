@@ -6,7 +6,7 @@
                     <span class="menu-name">Board</span>
                 </span>
                 <span class="menu-icon">
-                    <i class="icon-placeholder"><i class="icon-placeholder mdi mdi-shape-outline"></i></i>
+                    <i class="mdi mdi-shape-outline"></i>
                 </span>
             </a>
         </li>
@@ -19,7 +19,7 @@
                     <span class="menu-info"></span>
                 </span>
                 <span class="menu-icon">
-                    <i class="icon-placeholder "><i class="icon-placeholder mdi mdi-account-multiple"></i></i>
+                    <i class="mdi mdi-account-multiple"></i>
                 </span>
             </a>
             <!--submenu-->
@@ -30,7 +30,7 @@
                             <span class="menu-name">Listing</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder"><i class="icon-placeholder mdi mdi-account"></i></i></i>
+                            <i class="mdi mdi-account"></i>
                         </span>
                     </a>
                 </li>
@@ -40,7 +40,7 @@
                             <span class="menu-name">Document Approval</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder"><i class="icon-placeholder mdi mdi-file-document"></i></i></i>
+                            <i class="mdi mdi-file-document"></i>
                         </span>
                     </a>
                 </li>
@@ -50,7 +50,7 @@
                             <span class="menu-name">Account Registration</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder"><i class="icon-placeholder mdi mdi-account-multiple-plus"></i></i></i>
+                            <i class="mdi mdi-account-multiple-plus"></i>
                         </span>
                     </a>
                 </li>
@@ -60,7 +60,7 @@
                             <span class="menu-name">Genealogy</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder"><i class="icon-placeholder mdi mdi-human-male-male"></i></i></i>
+                            <i class="mdi mdi-human-male-male"></i>
                         </span>
                     </a>
                 </li>
@@ -70,7 +70,7 @@
                             <span class="menu-name">Update Passsword</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder"><i class="icon-placeholder mdi mdi-lock"></i></i></i>
+                            <i class="mdi mdi-lock"></i>
                         </span>
                     </a>
                 </li>
@@ -80,7 +80,7 @@
                             <span class="menu-name">Update Wallet</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder"><i class="icon-placeholder mdi mdi-cash-usd"></i></i></i>
+                            <i class="mdi mdi-cash-usd"></i>
                         </span>
                     </a>
                 </li>
@@ -95,7 +95,7 @@
                     <span class="menu-info"></span>
                 </span>
                 <span class="menu-icon">
-                    <i class="icon-placeholder "><i class="icon-placeholder mdi mdi-cart"></i></i>
+                    <i class="mdi mdi-cart"></i>
                 </span>
             </a>
             <!--submenu-->
@@ -106,7 +106,7 @@
                             <span class="menu-name">Pending</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">P</i></i>
+                            P
                         </span>
                     </a>
                 </li>
@@ -116,7 +116,7 @@
                             <span class="menu-name">Approved</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">A</i></i>
+                            A
                         </span>
                     </a>
                 </li>
@@ -126,7 +126,7 @@
                             <span class="menu-name">Completed</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">C</i></i>
+                            C
                         </span>
                     </a>
                 </li>
@@ -136,7 +136,7 @@
                             <span class="menu-name">Rejected</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">R</i></i>
+                            R
                         </span>
                     </a>
                 </li>
@@ -151,7 +151,7 @@
                     <span class="menu-info"></span>
                 </span>
                 <span class="menu-icon">
-                    <i class="icon-placeholder "><i class="icon-placeholder mdi mdi-refresh"></i></i>
+                    <i class="mdi mdi-refresh"></i>
                 </span>
             </a>
             <!--submenu-->
@@ -162,7 +162,7 @@
                             <span class="menu-name">Pending</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">P</i></i>
+                            P
                         </span>
                     </a>
                 </li>
@@ -172,7 +172,7 @@
                             <span class="menu-name">Approved</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">A</i></i>
+                            A
                         </span>
                     </a>
                 </li>
@@ -182,7 +182,7 @@
                             <span class="menu-name">Rejected</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">R</i></i>
+                            R
                         </span>
                     </a>
                 </li>
@@ -197,7 +197,7 @@
                     <span class="menu-info"></span>
                 </span>
                 <span class="menu-icon">
-                    <i class="icon-placeholder "><i class="icon-placeholder mdi mdi-file-document"></i></i>
+                    <i class="mdi mdi-file-document"></i>
                 </span>
             </a>
             <!--submenu-->
@@ -208,7 +208,7 @@
                             <span class="menu-name">Member & Sales</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">M</i></i>
+                            M
                         </span>
                     </a>
                 </li>
@@ -218,7 +218,7 @@
                             <span class="menu-name">Direct Referrer Sales</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">D</i></i>
+                            D
                         </span>
                     </a>
                 </li>
@@ -228,7 +228,7 @@
                             <span class="menu-name">Commission</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">C</i></i>
+                            C
                         </span>
                     </a>
                 </li>
@@ -238,7 +238,7 @@
                             <span class="menu-name">Wallet</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">W</i></i>
+                            W
                         </span>
                     </a>
                 </li>
@@ -248,7 +248,7 @@
                             <span class="menu-name">Ranking</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">R</i></i>
+                            R
                         </span>
                     </a>
                 </li>
@@ -258,7 +258,7 @@
                             <span class="menu-name">Monthly Report Wr</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">M</i></i>
+                            M
                         </span>
                     </a>
                 </li>
@@ -268,7 +268,7 @@
                             <span class="menu-name">Monthly Report Sales</span>
                         </span>
                         <span class="menu-icon">
-                            <i class="icon-placeholder"><i class="icon-placeholder">M</i></i>
+                            M
                         </span>
                     </a>
                 </li>
@@ -283,6 +283,42 @@
                     <i class="icon-placeholder"><i class="icon-placeholder mdi mdi-newspaper"></i></i>
                 </span>
             </a>
+        </li>
+        <li class="menu-item">
+            <a href="#" class="open-dropdown menu-link">
+                <span class="menu-label">
+                    <span class="menu-name">Website
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <span class="menu-info"></span>
+                </span>
+                <span class="menu-icon">
+                    <i class="mdi mdi-google-chrome"></i>
+                </span>
+            </a>
+            <!--submenu-->
+            <ul class="sub-menu">
+                <li class="menu-item">
+                    <a href="<?= base_url() ?>board/website/banners" class=" menu-link">
+                        <span class="menu-label">
+                            <span class="menu-name">Banners</span>
+                        </span>
+                        <span class="menu-icon">
+                            <i class="mdi mdi-file-image"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="<?= base_url() ?>board/website/enquiry" class=" menu-link">
+                        <span class="menu-label">
+                            <span class="menu-name">Enquiry Form</span>
+                        </span>
+                        <span class="menu-icon">
+                            <i class="mdi mdi-comment-question-outline"></i>
+                        </span>
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>

@@ -1,3 +1,5 @@
+-- import web_banner.sql
+
 ALTER TABLE `member` CHANGE `state` `state` INT NOT NULL;
 ALTER TABLE `stock_order` CHANGE `state` `state` INT NOT NULL;
 ALTER TABLE `member` ADD `is_modified` TINYINT(1) NOT NULL AFTER `is_wr_locked`;

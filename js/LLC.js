@@ -48,7 +48,7 @@ var LLC = {
         }, {
             placement: {
                 align: "right",
-                from: "bottom"
+                from: "top"
             },
             showProgressbar: true,
             timer: 500,
@@ -74,7 +74,7 @@ var LLC = {
         }, {
             placement: {
                 align: "right",
-                from: "bottom"
+                from: "top"
             },
             showProgressbar: true,
             timer: 500,

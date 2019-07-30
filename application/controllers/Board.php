@@ -292,6 +292,26 @@ class Board extends MY_Controller {
     public function login(){
         $this->load->view('adminlogin');
     }
+
+    public function website($page = '') {
+        switch ($page) {
+            case 'banners':
+                $this->data['title'] = 'Website Banners Management';
+                $this->data['records'] = $this->general_model->find('web_banner', array('is_deleted' => 0));
+                $this->loadPage('web_banner', $this->data);
+                break;
+            case 'enquiry':
+                $this->data['title'] = 'Website Enquiry Management';
+                $this->data['records'] = $this->general_model->find('web_enquiry', array('is_deleted' => 0));
+                $this->loadPage('web_enquiry', $this->data);
+                break;
+            default:
+                if($this->uri->segment(2) != 'banners' || $this->uri->segment(2) != 'enquiry') {
+                    refreshFunc('board/website/banners');
+                }
+                break;
+        }
+    }
     
     private function loadPage($page = "board", $data = array()) {
         $data['menu'] = $this->load->view('templates/side_nav_admin.php', $data, TRUE);

@@ -146,6 +146,7 @@
         });
     });
 </script>
+<?php if($_SESSION['user_privilege'] != 3) { ?>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -159,5 +160,6 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+<?php } ?>
 </body>
 </html>

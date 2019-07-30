@@ -468,6 +468,94 @@ class Production extends MY_Controller {
         $this->success("News Created");
     }
 
+    public function getWebBanner() {
+        $this->checkPrivilege(3);
+        
+        $banner = $this->general_model->get('web_banner', $this->input->post('id'));
+        if(sizeof($banner) == 0) {
+            $this->fail("Banner Not Found");
+        }
+        
+        $this->success($banner);
+    }
+    
+    public function deleteWebBanner() {
+        $this->checkPrivilege(3);
+        
+        $banner = $this->general_model->get('web_banner', $this->input->post('id'));
+        if(sizeof($banner) == 0) {
+            $this->fail("Banner Not Found");
+        }
+        
+        $this->general_model->update('web_banner', $banner['id'], array('is_deleted' => 1));
+        $this->success("Deleted");
+    }
+    
+    public function editWebBanner() {
+        $this->checkPrivilege(3);
+        
+        $banner = $this->general_model->get('web_banner', $this->input->post('id'));
+        if(sizeof($banner) == 0) {
+            $this->fail("Banner Not Found");
+        }
+        
+        $uploadedFile1 = $banner['banner_desktop'];
+        if(!empty($_FILES["banner_desktop"]["type"])){
+            $uploadedFile1 = $this->uploadFile("banner_desktop", "website");
+        }
+
+        $uploadedFile2 = $banner['banner_mobile'];
+        if(!empty($_FILES["banner_mobile"]["type"])){
+            $uploadedFile2 = $this->uploadFile("banner_mobile", "website");
+        }
+
+        $this->general_model->update('web_banner', $banner['id'], array(
+            'title' => $this->input->post('title'),
+            'banner_desktop' => $uploadedFile1,
+            'banner_mobile' => $uploadedFile2,
+            'sort' => $this->input->post('sort'),
+            'is_visible' =>  $this->input->post('is_visible'),
+        ));
+        $this->success("Updated");
+    }
+    
+    public function addWebBanner() {
+        $this->checkPrivilege(3);
+
+        $uploadedFile1 = '';
+        $uploadedFile2 = '';
+
+        if(!empty($_FILES["banner_desktop"]["type"])){
+            $uploadedFile1 = $this->uploadFile("banner_desktop", "website");
+        }
+
+        if(!empty($_FILES["banner_mobile"]["type"])){
+            $uploadedFile2 = $this->uploadFile("banner_mobile", "website");
+        }
+        
+        $this->general_model->create('web_banner', array(
+            'title' => $this->input->post('title'),
+            'banner_desktop' => $uploadedFile1,
+            'banner_mobile' => $uploadedFile2,
+            'sort' => $this->input->post('sort'),
+            'is_visible' =>  $this->input->post('is_visible'),
+            'created_at' => now(),
+            'created_by' => AN(),
+        ));
+        $this->success("Banner Created");
+    }
+
+    public function getWebEnquiry() {
+        $this->checkPrivilege(3);
+        
+        $enquiry = $this->general_model->get('web_enquiry', $this->input->post('id'));
+        if(sizeof($enquiry) == 0) {
+            $this->fail("Enquiry Not Found");
+        }
+        
+        $this->success($enquiry);
+    }
+
     public function onImageUpload() {
         if ($_FILES['file']['name']) {
             if (!is_dir("./uploads")){

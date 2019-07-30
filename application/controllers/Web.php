@@ -6,11 +6,13 @@ class Web extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('general_model');
+        $this->load->model('web_model');
     }
 
 	public function index()
 	{
-		$this->loadPage('index');
+		$data['banners'] = $this->web_model->getBanners();
+		$this->loadPage('index', $data);
 	}
 
 	public function about()

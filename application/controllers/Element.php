@@ -150,6 +150,7 @@ class Element extends MY_Controller {
 
     private function loadPage($page = "alerts", $data = array()) {
         $data['menu'] = $this->load->view('templates/side_nav_element.php', $data, TRUE);
+        $data['title'] = 'Elements';
 		$this->load->view('templates/header', $data);
 		$this->load->view('element/'.$page, $data);
 		$this->load->view('templates/footer');
