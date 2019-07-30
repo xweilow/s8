@@ -311,7 +311,7 @@
                 <li class="menu-item">
                     <a href="<?= base_url() ?>board/website/enquiry" class=" menu-link">
                         <span class="menu-label">
-                            <span class="menu-name">Enquiry Form</span>
+                            <span class="menu-name">Enquiry</span>
                         </span>
                         <span class="menu-icon">
                             <i class="mdi mdi-comment-question-outline"></i>

@@ -25,38 +25,37 @@
                         <div class="table-responsive p-t-10 overflow-auto">
                             <table id="example"class="table" style="width:100%">
                                 <thead>
-                                    <tr style="text-align: center;">
-                                        <th style="text-align: center; width: 50px;">#</th>
-                                        <th>Content</th>
+                                    <tr style="text-align: left;">
+                                        <th>#</th>
+                                        <th>Created At</th>
+                                        <th width="15%">Title</th>
+                                        <th width="15%">Desktop</th>
+                                        <th width="15%">Mobile</th>
+                                        <th>Language</th>
+                                        <th>Is Visible</th>
+                                        <th>Sort</th>
                                         <th style="text-align: center; width: 200px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $id = 1; foreach($records as $record) { ?>
-                                    <tr style="text-align: center;">
-                                        <td><?php echo $id ?></td>
-                                        <td style="text-align: left;">
-                                            <b><?php echo $record['title'] ?></b>
-                                            <br />
-                                            <i>Posted At: <?php echo $record['created_at'] ?></i>
-                                            <br />
-                                            Sort: <?php echo $record['sort'] ?>
-                                            <br />
-                                            <?php if($record['banner_desktop'] != '') { ?>
-                                            <span class="help-block">Banner Desktop Last Uploaded: <a href="<?php echo base_url().$record['banner_desktop'] ?>" target="_blank" class="btn btn-sm ml-2 mr-2 btn-light text-primary">View File</a></span>
-                                            <?php } ?>
-                                            <?php if($record['banner_mobile'] != '') { ?>
-                                            <br /><span class="help-block">Banner Mobile Last Uploaded: <a href="<?php echo base_url().$record['banner_mobile'] ?>" target="_blank" class="btn btn-sm ml-2 mr-2 btn-light text-primary">View File</a></span>
-                                            <?php } ?>
-                                            <?php if($record['is_visible'] != '') { ?>
-                                            <br /><span class="help-block">Is Visible: <?= $record['is_visible']==1?'Yes':'No'; ?></span>
-                                            <?php } ?>
-                                        </td>
+                                    <tr>
+                                        <td><?= $id ?></td>
+                                        <td><?= $record['created_at'] ?></td>
+                                        <td><?= $record['title'] ?><br>
+                                        <?php if($record['link']) { ?><a href="<?= $record['link'] ?>" target="_blank" class="btn btn-sm btn-light text-primary">View Link</a><?php } ?></td>
+                                        <td><?php if($record['banner_desktop'] != '') { ?>
+                                            <a href="<?= base_url().$record['banner_desktop'] ?>" target="_blank" class="btn btn-sm ml-2 mr-2 btn-light text-primary">View Image</a><?php } ?></td>
+                                        <td><?php if($record['banner_mobile'] != '') { ?>
+                                            <a href="<?= base_url().$record['banner_mobile'] ?>" target="_blank" class="btn btn-sm ml-2 mr-2 btn-light text-primary">View Image</a><?php } ?></td>
+                                        <td><?= $record['language'] ?></td>
+                                        <td><?= $record['is_visible']==1?'Yes':'No'; ?></td>
+                                        <td><?= $record['sort'] ?></td>
                                         <td style="text-align: center;">
                                             <div class="row m-b-10">
                                                 <div class="col-12">
-                                                    <button type="button" class="btn btn-sm btn-primary btn-edit" data-toggle="modal" data-id="<?php echo $record['id'] ?>" style='width: 80px;'>Edit</button>
-                                                    <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="<?php echo $record['id'] ?>" style='width: 80px;'>Delete</button>
+                                                    <div style="margin-bottom:5px;"><button type="button" class="btn btn-sm btn-primary btn-edit" data-toggle="modal" data-id="<?= $record['id'] ?>" style='width: 80px;'>Edit</button></div>
+                                                    <div><button type="button" class="btn btn-sm btn-danger btn-delete" data-id="<?= $record['id'] ?>" style='width: 80px;'>Delete</button></div>
                                                 </div>
                                             </div>
                                         </td>
@@ -108,6 +107,21 @@
                                     <label class="custom-file-label" for="banner_mobile">Choose file</label>
                                 </div>
                                 <small class="form-text text-muted">Recommended Width: 768 pixels, Height: No Limits</small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="language">Language</label>
+                                <select class="form-control" id="language">
+                                    <option value="english">English</option>
+                                    <option value="simplified-chinese">Simplified Chinese</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="link">Link</label>
+                                <input type="text" class="form-control" id="link" placeholder="https://www.perfects8.com">
                             </div>
                         </div>
                         <div class="form-row">
@@ -182,6 +196,21 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
+                                <label for="edit_language">Language</label>
+                                <select class="form-control" id="edit_language">
+                                    <option value="english">English</option>
+                                    <option value="simplified-chinese">Simplified Chinese</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="edit_link">Link</label>
+                                <input type="text" class="form-control" id="edit_link" placeholder="https://www.perfects8.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
                                 <label for="edit_sort">Sort</label>
                                 <input type="text" class="form-control" id="edit_sort">
                                 <small class="form-text text-muted">Banners will sort accordingly, the largest number will be at last, fill in number.</small>
@@ -223,6 +252,8 @@
                 $("#current_banner_desktop").attr("href", b_url+resp.data.banner_desktop);
                 $("#current_banner_desktop_value").val(resp.data.banner_desktop);
                 $("#edit_sort").val(resp.data.sort);
+                $("#edit_language").val(resp.data.language);
+                $("#edit_link").val(resp.data.link);
                 $("#edit_is_visible").val(resp.data.is_visible);
 
                 if(resp.data.banner_mobile == '') {
@@ -272,6 +303,8 @@
         formData.append("banner_desktop", $("#edit_banner_desktop")[0].files[0]);
         formData.append("banner_mobile", $("#edit_banner_mobile")[0].files[0]);
         formData.append("sort", $("#edit_sort").val());
+        formData.append("language", $("#edit_language").val());
+        formData.append("link", $("#edit_link").val());
         formData.append("is_visible", $("#edit_is_visible").val());
         
         LLC.callServer('production/editWebBanner', formData, function(resp) {
@@ -297,6 +330,8 @@
         formData.append("banner_desktop", $("#banner_desktop")[0].files[0]);
         formData.append("banner_mobile", $("#banner_mobile")[0].files[0]);
         formData.append("sort", $("#sort").val());
+        formData.append("language", $("#language").val());
+        formData.append("link", $("#link").val());
         formData.append("is_visible", $("#is_visible").val());
         
         LLC.callServer('production/addWebBanner', formData, function(resp) {

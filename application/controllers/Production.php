@@ -514,6 +514,8 @@ class Production extends MY_Controller {
             'banner_desktop' => $uploadedFile1,
             'banner_mobile' => $uploadedFile2,
             'sort' => $this->input->post('sort'),
+            'language' => $this->input->post('language'),
+            'link' => $this->input->post('link'),
             'is_visible' =>  $this->input->post('is_visible'),
         ));
         $this->success("Updated");
@@ -538,6 +540,8 @@ class Production extends MY_Controller {
             'banner_desktop' => $uploadedFile1,
             'banner_mobile' => $uploadedFile2,
             'sort' => $this->input->post('sort'),
+            'language' => $this->input->post('language'),
+            'link' => $this->input->post('link'),
             'is_visible' =>  $this->input->post('is_visible'),
             'created_at' => now(),
             'created_by' => AN(),

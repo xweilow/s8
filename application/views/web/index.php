@@ -23,8 +23,10 @@
                     }
                 ?>
                 <div class="carousel-item <?= $key==0?'active':''; ?>">
+                <?php if($banner['link']) { ?><a href="<?= $banner['link'] ?>" target="_blank"><?php } ?>
                     <img src="<?= $banner_desktop; ?>" alt="<?= $banner['title'] ?>" class="img-fluid w-100 d-none d-sm-block">
                     <img src="<?= $banner_mobile; ?>" alt="<?= $banner['title'] ?>" class="img-fluid w-100 d-block d-sm-none">
+                <?php if($banner['link']) { ?></a><?php } ?>
                 </div>
                 <?php } ?>
             </div>
