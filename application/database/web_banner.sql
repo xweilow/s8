@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2019 at 09:43 AM
+-- Generation Time: Jul 30, 2019 at 03:09 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -33,6 +33,8 @@ CREATE TABLE `web_banner` (
   `title` text NOT NULL,
   `banner_desktop` varchar(200) NOT NULL,
   `banner_mobile` varchar(200) DEFAULT NULL,
+  `language` varchar(50) NOT NULL,
+  `link` text NOT NULL,
   `sort` int(11) NOT NULL,
   `is_visible` tinyint(1) NOT NULL,
   `created_at` datetime NOT NULL,
